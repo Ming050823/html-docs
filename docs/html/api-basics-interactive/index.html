@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>API 是什麼？ · What is an API? · API là gì?</title>
+<style>
+  :root {
+    --bg: #f6f0e6;
+    --bg-2: #fffaf3;
+    --ink: #2c241c;
+    --muted: #6e6256;
+    --line: #e4d8c8;
+    --green: #3f6b4e;
+    --green-soft: #e7f0e6;
+    --orange: #c46a32;
+    --orange-soft: #fde8d8;
+    --blue: #3d6488;
+    --blue-soft: #e5eef6;
+    --gold: #c9a15b;
+    --shadow: 0 10px 30px rgba(70, 48, 24, 0.08);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans", sans-serif;
+    background:
+      radial-gradient(900px 420px at 10% -10%, #fbe7cf 0%, transparent 60%),
+      radial-gradient(800px 380px at 100% 0%, #e5f0e4 0%, transparent 55%),
+      var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 64px; }
+  header {
+    display: flex; justify-content: space-between; gap: 16px; align-items: flex-start;
+    flex-wrap: wrap; margin-bottom: 18px;
+  }
+  .eyebrow {
+    letter-spacing: .08em; text-transform: uppercase; font-size: 12px;
+    color: var(--orange); font-weight: 700; margin: 0 0 6px;
+  }
+  h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.2; margin: 0 0 8px; }
+  .lead { margin: 0; color: var(--muted); max-width: 62ch; }
+  .langs { display: flex; gap: 8px; background: white; padding: 6px; border-radius: 999px; box-shadow: var(--shadow); }
+  .langs button {
+    border: 0; background: transparent; padding: 8px 14px; border-radius: 999px;
+    cursor: pointer; font-weight: 700; color: var(--muted);
+  }
+  .langs button.active { background: var(--ink); color: white; }
+  .card {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 22px; margin-top: 16px;
+  }
+  h2 { margin: 0 0 8px; font-size: 24px; }
+  .q {
+    background: var(--orange-soft); border-radius: 14px; padding: 12px 14px; margin: 12px 0;
+    font-weight: 650;
+  }
+  .stage {
+    position: relative; min-height: 280px; border-radius: 16px; overflow: hidden;
+    background: linear-gradient(#f7e7cf, #f3d7b4 42%, #e7c39a 42%, #edd9bc 100%);
+    border: 1px solid var(--line);
+  }
+  .kitchen {
+    position: absolute; right: 0; top: 0; bottom: 38%; width: 34%;
+    background: linear-gradient(#f4efe4, #e7e0d2);
+    border-left: 8px solid #6d8f72;
+  }
+  .chef {
+    position: absolute; right: 28px; bottom: 18px; font-size: 42px;
+  }
+  .door {
+    position: absolute; right: 34%; top: 18px; bottom: 38%; width: 18px;
+    background: #6d8f72; border-radius: 8px 0 0 8px;
+  }
+  .table {
+    position: absolute; left: 8%; bottom: 18px; width: 34%; height: 18px;
+    background: #c9844a; border-radius: 8px;
+  }
+  .person { position: absolute; font-size: 46px; transition: transform .6s ease; }
+  .customer { left: 12%; bottom: 34px; }
+  .waiter { left: 42%; bottom: 46px; }
+  .waiter.go { transform: translateX(150px); }
+  .envelope {
+    position: absolute; left: 24%; bottom: 120px; background: white; border-radius: 12px;
+    padding: 6px 10px; font-size: 13px; box-shadow: var(--shadow); opacity: 0;
+    transition: all .7s ease; max-width: 180px;
+  }
+  .envelope.show { opacity: 1; }
+  .envelope.to-kitchen { left: 68%; bottom: 150px; }
+  .envelope.back { left: 28%; bottom: 130px; background: #fff6ea; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  button.action, button.ghost {
+    border: 0; border-radius: 999px; padding: 10px 14px; cursor: pointer; font-weight: 700;
+  }
+  button.action { background: var(--green); color: white; }
+  button.ghost { background: white; color: var(--ink); border: 1px solid var(--line); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .log {
+    margin-top: 12px; background: white; border-radius: 12px; padding: 12px 14px;
+    border: 1px dashed var(--line); min-height: 72px;
+  }
+  .log b { color: var(--green); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .app {
+    text-align: left; background: white; border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px; cursor: pointer; transition: transform .15s ease, border-color .15s;
+  }
+  .app:hover, .app.open { transform: translateY(-2px); border-color: var(--green); }
+  .app .icon { font-size: 28px; }
+  .app h3 { margin: 6px 0 4px; font-size: 17px; }
+  .app p { margin: 0; color: var(--muted); font-size: 14px; }
+  .detail {
+    display: none; margin-top: 10px; background: var(--green-soft); border-radius: 10px; padding: 8px 10px;
+    color: var(--ink); font-size: 14px;
+  }
+  .app.open .detail { display: block; }
+  .plug-row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .outlet {
+    width: 92px; height: 92px; border-radius: 16px; background: #f4efe6; border: 1px solid var(--line);
+    display: grid; place-items: center; box-shadow: inset 0 0 0 8px white;
+  }
+  .holes { display: flex; gap: 10px; }
+  .holes span { width: 10px; height: 24px; background: #2c241c; border-radius: 4px; }
+  .lamp {
+    width: 120px; text-align: center; cursor: pointer; user-select: none;
+  }
+  .bulb {
+    width: 54px; height: 54px; margin: 0 auto 6px; border-radius: 50% 50% 46% 46%;
+    background: #d9d3c7; transition: all .3s ease;
+  }
+  .lamp.on .bulb {
+    background: #ffe08a; box-shadow: 0 0 30px #ffd15a;
+  }
+  .steps { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 0; }
+  .step {
+    flex: 1; min-width: 140px; background: white; border-radius: 12px; padding: 10px;
+    border: 1px solid var(--line); font-size: 14px;
+  }
+  .step strong { display: block; color: var(--orange); }
+  .quiz button { margin: 4px 6px 0 0; }
+  .quiz .result { margin-top: 10px; font-weight: 700; }
+  .ok { color: var(--green); }
+  .no { color: var(--orange); }
+  footer { margin-top: 22px; color: var(--muted); font-size: 14px; }
+  .map { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .pill { background: white; border-radius: 999px; padding: 6px 10px; border: 1px solid var(--line); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <p class="eyebrow" id="eyebrow"></p>
+      <h1 id="title"></h1>
+      <p class="lead" id="lead"></p>
+    </div>
+    <div class="langs" role="tablist">
+      <button type="button" data-lang="zh" class="active">中文</button>
+      <button type="button" data-lang="en">English</button>
+      <button type="button" data-lang="vi">Tiếng Việt</button>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2 id="s1"></h2>
+    <p id="s1p"></p>
+    <div class="q" id="s1q"></div>
+    <div class="stage" aria-hidden="true">
+      <div class="kitchen"><div class="chef">👨‍🍳</div></div>
+      <div class="door"></div>
+      <div class="table"></div>
+      <div class="person customer">🙂</div>
+      <div class="person waiter" id="waiter">🧑‍🍳</div>
+      <div class="envelope" id="env"></div>
+    </div>
+    <div class="controls">
+      <button class="ghost" type="button" data-dish="noodle" id="d1"></button>
+      <button class="ghost" type="button" data-dish="tea" id="d2"></button>
+      <button class="ghost" type="button" data-dish="no" id="d3"></button>
+      <button class="action" type="button" id="orderBtn"></button>
+    </div>
+    <div class="log" id="log"></div>
+    <div class="map">
+      <span class="pill" id="m1"></span>
+      <span class="pill" id="m2"></span>
+      <span class="pill" id="m3"></span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 id="s2"></h2>
+    <p id="s2p"></p>
+    <div class="plug-row">
+      <div class="outlet" title="API"><div class="holes"><span></span><span></span></div></div>
+      <div class="lamp" id="lamp">
+        <div class="bulb"></div>
+        <div id="lampLabel"></div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><strong>1</strong><span id="st1"></span></div>
+      <div class="step"><strong>2</strong><span id="st2"></span></div>
+      <div class="step"><strong>3</strong><span id="st3"></span></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 id="s3"></h2>
+    <p id="s3p"></p>
+    <div class="q" id="s3q"></div>
+    <div class="grid" id="apps"></div>
+  </section>
+
+  <section class="card quiz">
+    <h2 id="s4"></h2>
+    <p id="s4p"></p>
+    <div id="choices"></div>
+    <div class="result" id="quizResult"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+<script>
+const I18N = {
+  zh: {
+    eyebrow: "給沒有 IT 背景的人",
+    title: "API，就是那位不會進廚房的服務生",
+    lead: "你不需要會寫程式。先點一張餐，看要求怎麼被送進去、結果怎麼被送回來。",
+    s1: "1. 親手點一餐",
+    s1p: "你負責說清楚要什麼。廚房怎麼做，你看不見，也不必看見。",
+    s1q: "如果服務生聽不懂你的話，或廚房不肯按約定出餐，這頓飯還點得成嗎？",
+    d1: "牛肉麵", d2: "熱茶", d3: "不要香菜", order: "請服務生去問廚房",
+    log0: "先選一樣，再送出。看看中間那個人做了什麼。",
+    sent: "你說：「我要{dish}。」服務生記下了，沒有叫你進廚房。",
+    going: "服務生走進廚房門口，用廚房聽得懂的方式轉達。",
+    back: "廚房做好了，服務生把{dish}送回來。你只看到結果。",
+    m1: "你 = 使用 App 的人", m2: "服務生 = API", m3: "廚房 = 另一家公司的系統",
+    s2: "2. 插座為什麼不用說明書？",
+    s2p: "點燈。你不需要懂發電廠，只要插頭形狀對、規則對。API 就是這個事先講好的接口。",
+    lamp: "點一下插上 / 拔掉",
+    st1: "你提出清楚的要求", st2: "對方在自己家裡處理", st3: "對方按約定把結果送回",
+    s3: "3. 你手機裡，誰在幫你跑腿？",
+    s3p: "畫面是這支 App 畫的。很多資料與關鍵動作，是問別人家借來的。",
+    s3q: "哪一個功能，你覺得不可能是這支 App 自己做出來的？點開看看。",
+    apps: [
+      ["🌤", "查天氣", "App 問氣象單位：這個城市現在幾度？對方回一組數字，App 再畫成圖。"],
+      ["🗺", "外送地圖", "App 問地圖服務：從店到你家怎麼走、要多久？對方回路線。"],
+      ["🔑", "用其他帳號登入", "App 不保管你的密碼，只請帳號服務確認「是不是你」。"],
+      ["💳", "線上付款", "結帳時請銀行或金流扣款。App 不經手你的卡片密碼。"]
+    ],
+    s4: "4. 少了這位服務生會怎樣？",
+    s4p: "選一個你覺得最接近的答案。",
+    choices: [
+      ["每支 App 都得自己蓋氣象站、自己當銀行。", true],
+      ["只是畫面變醜，功能都還在。", false],
+      ["使用者必須學會寫程式才能點餐。", false]
+    ],
+    yes: "對。沒有約定好的窗口，合作就會變成每個人自己重做一遍。",
+    no: "再想一次：服務生消失後，是「做法被拆開」，還是「根本借不到別人的廚房」？",
+    foot: "試著換一種語言，再用自己的話講一次：你是誰、服務生是誰、廚房是誰。"
+  },
+  en: {
+    eyebrow: "For anyone without an IT background",
+    title: "An API is the waiter who never lets you into the kitchen",
+    lead: "You do not need to code. Place an order and watch the request go in and the result come back.",
+    s1: "1. Place an order yourself",
+    s1p: "You only say what you want. How the kitchen cooks stays out of sight, and that is fine.",
+    s1q: "If the waiter cannot understand you, or the kitchen will not follow the agreed reply, can the meal still happen?",
+    d1: "Beef noodles", d2: "Hot tea", d3: "No cilantro", order: "Send the waiter to the kitchen",
+    log0: "Pick something, then send it. Watch what the person in the middle does.",
+    sent: "You say: “I want {dish}.” The waiter writes it down and does not invite you into the kitchen.",
+    going: "The waiter reaches the kitchen door and passes the request in a way the kitchen understands.",
+    back: "The kitchen finishes. The waiter brings {dish} back. You only see the result.",
+    m1: "You = the person using an app", m2: "Waiter = the API", m3: "Kitchen = another company’s system",
+    s2: "2. Why does a socket need no manual?",
+    s2p: "Turn on the lamp. You do not need the power plant. The plug shape and the rules just have to match. An API is that agreed socket.",
+    lamp: "Tap to plug in / unplug",
+    st1: "You make a clear request", st2: "They handle it in their own house", st3: "They send the agreed result back",
+    s3: "3. Who is running errands inside your phone?",
+    s3p: "The app draws the screen. Much of the data and the important actions are borrowed from someone else.",
+    s3q: "Which feature could this app not have built alone? Open one.",
+    apps: [
+      ["🌤", "Weather", "The app asks a weather service: how warm is this city? A number comes back, then the app draws it."],
+      ["🗺", "Delivery map", "The app asks a map service: how do we get from the shop to home, and how long? A route comes back."],
+      ["🔑", "Sign in with another account", "The app does not keep your password. It asks the account service: is this really you?"],
+      ["💳", "Online payment", "At checkout it asks a bank or payment service to charge you. The app never sees your card secret."]
+    ],
+    s4: "4. What if that waiter disappeared?",
+    s4p: "Pick the answer that feels closest.",
+    choices: [
+      ["Every app would have to build its own weather station and act as a bank.", true],
+      ["Only the pictures would get worse. The features would remain.", false],
+      ["Users would have to learn coding just to order food.", false]
+    ],
+    yes: "Yes. Without an agreed window, cooperation turns into everyone rebuilding the same kitchen.",
+    no: "Look again: when the waiter is gone, is the method merely exposed, or can you no longer borrow anyone’s kitchen?",
+    foot: "Switch language, then say it in your own words: who you are, who the waiter is, who the kitchen is."
+  },
+  vi: {
+    eyebrow: "Dành cho người không có nền tảng IT",
+    title: "API là người phục vụ không cho bạn vào bếp",
+    lead: "Bạn không cần biết lập trình. Hãy gọi một món và xem yêu cầu đi vào, kết quả đi ra thế nào.",
+    s1: "1. Tự gọi một món",
+    s1p: "Bạn chỉ cần nói rõ mình muốn gì. Bếp nấu ra sao thì bạn không thấy, cũng không cần thấy.",
+    s1q: "Nếu người phục vụ không hiểu bạn, hoặc bếp không trả món theo thỏa thuận, bữa ăn còn gọi được không?",
+    d1: "Mì bò", d2: "Trà nóng", d3: "Không bỏ ngò", order: "Nhờ người phục vụ hỏi bếp",
+    log0: "Chọn một món, rồi gửi. Hãy xem người đứng giữa làm gì.",
+    sent: "Bạn nói: “Tôi muốn {dish}.” Người phục vụ ghi lại, không mời bạn vào bếp.",
+    going: "Người phục vụ đến cửa bếp và chuyển yêu cầu theo cách bếp nghe được.",
+    back: "Bếp làm xong. Người phục vụ mang {dish} về. Bạn chỉ thấy kết quả.",
+    m1: "Bạn = người dùng ứng dụng", m2: "Người phục vụ = API", m3: "Bếp = hệ thống của công ty khác",
+    s2: "2. Vì sao ổ điện không cần sách hướng dẫn?",
+    s2p: "Bật đèn. Bạn không cần hiểu nhà máy điện. Chỉ cần phích cắm đúng kiểu và đúng quy tắc. API chính là ổ cắm đã thỏa thuận sẵn.",
+    lamp: "Chạm để cắm / rút",
+    st1: "Bạn đưa một yêu cầu rõ ràng", st2: "Bên kia xử lý trong nhà họ", st3: "Họ trả kết quả đúng như đã hẹn",
+    s3: "3. Trong điện thoại, ai đang chạy việc giúp bạn?",
+    s3p: "Ứng dụng vẽ màn hình. Nhiều dữ liệu và việc quan trọng là hỏi mượn từ nơi khác.",
+    s3q: "Tính năng nào bạn nghĩ ứng dụng này không thể tự làm? Hãy mở ra.",
+    apps: [
+      ["🌤", "Xem thời tiết", "Ứng dụng hỏi nơi dự báo: thành phố này bao nhiêu độ? Một con số được trả về, rồi ứng dụng vẽ thành hình."],
+      ["🗺", "Bản đồ giao đồ ăn", "Ứng dụng hỏi dịch vụ bản đồ: từ quán về nhà đi thế nào, mất bao lâu? Lộ trình được trả về."],
+      ["🔑", "Đăng nhập bằng tài khoản khác", "Ứng dụng không giữ mật khẩu của bạn. Nó chỉ nhờ dịch vụ tài khoản xác nhận “đúng là bạn”."],
+      ["💳", "Thanh toán trực tuyến", "Khi trả tiền, nó nhờ ngân hàng hoặc cổng thanh toán trừ tiền. Ứng dụng không cầm mật khẩu thẻ."]
+    ],
+    s4: "4. Nếu người phục vụ biến mất thì sao?",
+    s4p: "Chọn câu bạn thấy gần nhất.",
+    choices: [
+      ["Mỗi ứng dụng phải tự xây trạm thời tiết và tự làm ngân hàng.", true],
+      ["Chỉ là hình xấu đi, chức năng vẫn còn.", false],
+      ["Người dùng phải học lập trình mới gọi được món.", false]
+    ],
+    yes: "Đúng. Không có cửa sổ đã thỏa thuận, hợp tác sẽ thành mỗi người tự dựng lại một căn bếp.",
+    no: "Nghĩ lại: khi người phục vụ mất, cách làm bị lộ ra, hay là bạn không còn mượn được bếp của ai?",
+    foot: "Đổi ngôn ngữ, rồi nói lại bằng lời của bạn: bạn là ai, người phục vụ là ai, bếp là ai."
+  }
+};
+
+let lang = "zh";
+let dish = "noodle";
+let busy = false;
+
+const $ = (id) => document.getElementById(id);
+
+function dishName() {
+  const t = I18N[lang];
+  if (dish === "tea") return t.d2;
+  if (dish === "no") return t.d3;
+  return t.d1;
+}
+
+function render() {
+  const t = I18N[lang];
+  document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang === "vi" ? "vi" : "en";
+  $("eyebrow").textContent = t.eyebrow;
+  $("title").textContent = t.title;
+  $("lead").textContent = t.lead;
+  $("s1").textContent = t.s1;
+  $("s1p").textContent = t.s1p;
+  $("s1q").textContent = t.s1q;
+  $("d1").textContent = t.d1;
+  $("d2").textContent = t.d2;
+  $("d3").textContent = t.d3;
+  $("orderBtn").textContent = t.order;
+  $("m1").textContent = t.m1;
+  $("m2").textContent = t.m2;
+  $("m3").textContent = t.m3;
+  $("s2").textContent = t.s2;
+  $("s2p").textContent = t.s2p;
+  $("lampLabel").textContent = t.lamp;
+  $("st1").textContent = t.st1;
+  $("st2").textContent = t.st2;
+  $("st3").textContent = t.st3;
+  $("s3").textContent = t.s3;
+  $("s3p").textContent = t.s3p;
+  $("s3q").textContent = t.s3q;
+  $("s4").textContent = t.s4;
+  $("s4p").textContent = t.s4p;
+  $("foot").textContent = t.foot;
+  if (!$("log").dataset.locked) $("log").innerHTML = t.log0;
+  $("apps").innerHTML = t.apps.map((a, i) =>
+    `<button class="app" type="button" data-i="${i}"><div class="icon">${a[0]}</div><h3>${a[1]}</h3><p></p><div class="detail">${a[3] ? "" : a[2]}</div></button>`
+  ).join("");
+  document.querySelectorAll("#apps .app").forEach((btn) => {
+    btn.addEventListener("click", () => btn.classList.toggle("open"));
+  });
+  $("choices").innerHTML = t.choices.map((c, i) =>
+    `<button class="ghost" type="button" data-ok="${c[1]}" data-i="${i}">${c[0]}</button>`
+  ).join("");
+  $("quizResult").textContent = "";
+  document.querySelectorAll("#choices button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const ok = btn.dataset.ok === "true";
+      $("quizResult").textContent = ok ? t.yes : t.no;
+      $("quizResult").className = "result " + (ok ? "ok" : "no");
+    });
+  });
+  document.querySelectorAll(".langs button").forEach((b) => {
+    b.classList.toggle("active", b.dataset.lang === lang);
+  });
+  markDish();
+}
+
+function markDish() {
+  document.querySelectorAll("[data-dish]").forEach((b) => {
+    b.style.outline = b.dataset.dish === dish ? "2px solid #3f6b4e" : "";
+  });
+}
+
+async function order() {
+  if (busy) return;
+  busy = true;
+  $("orderBtn").disabled = true;
+  const t = I18N[lang];
+  const name = dishName();
+  const env = $("env");
+  const waiter = $("waiter");
+  $("log").dataset.locked = "1";
+  env.className = "envelope show";
+  env.textContent = name;
+  $("log").innerHTML = `<b>1.</b> ${t.sent.replace("{dish}", name)}`;
+  await wait(700);
+  waiter.classList.add("go");
+  env.classList.add("to-kitchen");
+  $("log").innerHTML = `<b>2.</b> ${t.going}`;
+  await wait(900);
+  $("log").innerHTML = `<b>3.</b> ${t.back.replace("{dish}", name)}`;
+  env.classList.remove("to-kitchen");
+  env.classList.add("back");
+  waiter.classList.remove("go");
+  await wait(800);
+  busy = false;
+  $("orderBtn").disabled = false;
+}
+
+function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
+
+document.querySelectorAll(".langs button").forEach((b) => {
+  b.addEventListener("click", () => { lang = b.dataset.lang; $("log").dataset.locked = ""; render(); });
+});
+document.querySelectorAll("[data-dish]").forEach((b) => {
+  b.addEventListener("click", () => { dish = b.dataset.dish; markDish(); });
+});
+$("orderBtn").addEventListener("click", order);
+$("lamp").addEventListener("click", () => $("lamp").classList.toggle("on"));
+render();
+</script>
+</body>
+</html>

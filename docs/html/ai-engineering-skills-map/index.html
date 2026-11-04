@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AI Engineering Skills Map — Using Coding Agents | Claude Code × Codex</title>
+<style>
+:root{--bg:#f6f3ee;--paper:#fffcf7;--ink:#1c1915;--muted:#5f584e;--line:#e4ddd3;--accent:#b45309;--accent-soft:#f3e4d0;--card:#fff;--shadow:0 10px 30px rgba(28,25,21,.06)}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:"Source Han Serif TC","Noto Serif TC",Georgia,serif;background:radial-gradient(1200px 500px at 10% -10%,#fde8c8 0%,transparent 50%),var(--bg);color:var(--ink);line-height:1.65}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 80px}header.hero{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:36px 36px 28px;box-shadow:var(--shadow)}
+.kicker{font-family:ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--accent);font-weight:700;margin:0 0 10px}
+h1{font-size:clamp(28px,4vw,42px);line-height:1.2;margin:0 0 12px}.sub{color:var(--muted);font-size:16px;margin:0 0 22px;max-width:46em}
+.meta{display:flex;flex-wrap:wrap;gap:8px 10px;font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px}.pill{background:var(--accent-soft);color:#7c2d12;border-radius:999px;padding:5px 10px}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}.lang{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-family:ui-sans-serif,system-ui,sans-serif}
+.lang button{border:0;background:transparent;padding:8px 14px;cursor:pointer;font-weight:650;color:var(--muted)}.lang button.active{background:var(--ink);color:#fff}
+nav.toc{margin:22px 0 0;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px}nav.toc a{color:var(--muted);text-decoration:none;margin-right:14px}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 28px 22px;margin-top:18px;box-shadow:var(--shadow)}
+h2{font-size:24px;margin:0 0 8px}h3{font-size:18px;margin:22px 0 8px}p{margin:0 0 12px}.muted{color:var(--muted)}a{color:#9a3412}ul,ol{margin:0 0 12px;padding-left:1.2em}li{margin:0 0 6px}
+.note{background:#fff7ed;border-left:4px solid var(--accent);padding:12px 14px;border-radius:0 10px 10px 0;margin:14px 0;font-size:15px}
+table{width:100%;border-collapse:collapse;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13.5px;margin:12px 0 6px}th,td{border-bottom:1px solid var(--line);text-align:left;vertical-align:top;padding:10px 8px}th{font-size:12px;color:#7c2d12;background:#faf6f0}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}.card{border:1px solid var(--line);border-radius:14px;padding:14px 14px 10px;background:#fffaf3}.card h3{margin:0 0 6px;font-size:16px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;background:#f3eee6;padding:1px 5px;border-radius:5px}footer{margin-top:28px;color:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px}
+.zh,.en,.zh-inline,.en-inline{display:none!important}
+html[data-lang=zh] h1.zh,html[data-lang=zh] h2.zh,html[data-lang=zh] h3.zh,html[data-lang=zh] p.zh,html[data-lang=zh] div.zh,html[data-lang=zh] ul.zh,html[data-lang=zh] ol.zh,html[data-lang=zh] section .zh{display:block!important}
+html[data-lang=en] h1.en,html[data-lang=en] h2.en,html[data-lang=en] h3.en,html[data-lang=en] p.en,html[data-lang=en] div.en,html[data-lang=en] ul.en,html[data-lang=en] ol.en,html[data-lang=en] section .en{display:block!important}
+html[data-lang=zh] li.zh,html[data-lang=en] li.en{display:list-item!important}
+html[data-lang=zh] th.zh,html[data-lang=zh] td.zh,html[data-lang=en] th.en,html[data-lang=en] td.en{display:table-cell!important}
+html[data-lang=zh] .zh-inline,html[data-lang=en] .en-inline{display:inline!important}
+@media(max-width:800px){header.hero,section{padding:22px 16px}.grid-3{grid-template-columns:1fr}table{display:block;overflow-x:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<p class="kicker">Andrew Ng · AI Engineering Skills Map · Part 4</p>
+<h1 class="zh">使用 Coding Agent 的五項核心能力<br/>與 Claude Code / Codex 對照</h1>
+<h1 class="en">Five Skills for Using Coding Agents<br/>Mapped to Claude Code and Codex</h1>
+<p class="sub zh">整理自 2026 年 9 月 4 日 Andrew Ng 信件與 Claude Code / Codex 對照。摘要，非原文轉載。</p>
+<p class="sub en">Digest of Andrew Ng’s 4 September 2026 letter, mapped to Claude Code and Codex. Not a reprint.</p>
+<div class="meta"><span class="pill">Sep 4, 2026</span><span class="pill">DeepLearning.AI</span><span class="pill">Claude Code × Codex</span><span class="pill zh-inline">完整長表版</span><span class="pill en-inline">Full tables</span></div>
+<div class="toolbar"><div class="lang"><button type="button" id="btn-zh" class="active" onclick="setLang('zh')">中文</button><button type="button" id="btn-en" onclick="setLang('en')">English</button></div>
+<nav class="toc"><a href="#sources">Sources</a><a href="#workflow">Workflow</a><a href="#skills">Skills</a><a href="#matrix">Matrix</a><a href="#daily">Daily loop</a></nav></div>
+</header>
+<section id="sources"><h2 class="zh">1. 出處與版權</h2><h2 class="en">1. Sources and copyright</h2>
+<div class="zh"><p>正式標題：<strong>The AI Engineering Skills Map Part 4 — Coding Agents</strong>。系列第四篇。</p>
+<ul><li><a href="https://www.deeplearning.ai/the-batch/the-ai-engineering-skills-map-in-detail-using-coding-agents">DeepLearning.AI / The Batch</a></li>
+<li><a href="https://www.andrewng.org/writing">andrewng.org/writing</a></li>
+<li><a href="https://x.com/AndrewYNg/status/2095890279865721217">X @AndrewYNg</a></li></ul>
+<div class="note">原文受著作權保護，此頁為摘要與實作對照。</div></div>
+<div class="en"><p>Official title: <strong>The AI Engineering Skills Map Part 4 — Coding Agents</strong>.</p>
+<ul><li><a href="https://www.deeplearning.ai/the-batch/the-ai-engineering-skills-map-in-detail-using-coding-agents">DeepLearning.AI letter</a></li>
+<li><a href="https://www.andrewng.org/writing">andrewng.org/writing</a></li>
+<li><a href="https://x.com/AndrewYNg/status/2095890279865721217">X post</a></li></ul>
+<div class="note">Copyrighted letter; this page is a digest plus mapping.</div></div></section>
+<section id="workflow"><h2 class="zh">2. 高階工作流</h2><h2 class="en">2. High-level workflow</h2>
+<p class="zh muted">規劃 → 執行 → 部署監控。可省略、可拉長、高度迭代。</p>
+<p class="en muted">Plan → execute → deploy and monitor. Steps can be skipped or stretched.</p>
+<div class="grid-3">
+<article class="card"><h3 class="zh">Planning</h3><h3 class="en">Planning</h3><p class="zh">研究、實驗、理解程式碼 → spec → 執行計畫。檢視假設、安全、過度設計。</p><p class="en">Brainstorm, spec, execution plan. Check assumptions, security, overengineering.</p></article>
+<article class="card"><h3 class="zh">Execution</h3><h3 class="en">Execution</h3><p class="zh">Agent 建、測、驗證。平衡自主與人工監督。</p><p class="en">Build, test, verify. Balance autonomy and oversight.</p></article>
+<article class="card"><h3 class="zh">Deploy & monitor</h3><h3 class="en">Deploy & monitor</h3><p class="zh">CI/CD 或人工閘門部署；agent 看 log 並改進。</p><p class="en">Deploy, then watch logs and apply improvements.</p></article>
+</div></section>
+<section id="skills"><h2 class="zh">3. 五項核心能力</h2><h2 class="en">3. Five core skills</h2>
+<h3 class="zh">3.1 Directing the workflow 指揮工作流</h3><h3 class="en">3.1 Directing the workflow</h3>
+<p class="zh">決定每步人力／agent 時間、何時回退、spec 寫多細、如何拆成可驗證步驟。</p>
+<p class="en">Decide human vs agent effort, when to iterate back, spec depth, and verifiable decomposition.</p>
+<h3 class="zh">3.2 Enabling agent autonomy 讓 agent 能自主</h3><h3 class="en">3.2 Enabling agent autonomy</h3>
+<p class="zh">選自主層級、管 context、並行、權限與閘門。</p>
+<p class="en">Choose autonomy, manage context, run parallel agents, set safe permissions.</p>
+<h3 class="zh">3.3 Reviewing the work 審查產出</h3><h3 class="en">3.3 Reviewing the work</h3>
+<p class="zh">行為／功能驗證、user flow、eval、agentic review。測試由你指定。</p>
+<p class="en">Behavioral and functional checks, flows, evals, agentic review. You own the tests.</p>
+<h3 class="zh">3.4 Customizing environment 客製環境</h3><h3 class="en">3.4 Customizing the environment</h3>
+<p class="zh"><code>AGENTS.md</code> / <code>CLAUDE.md</code>、skills、hooks、MCP。累積 learnings，清技術債。</p>
+<p class="en">Standing context, skills, hooks, MCP. Accumulate learnings; clear agent debt.</p>
+<h3 class="zh">3.5 Coding agent foundations 心智模型</h3><h3 class="en">3.5 Coding agent foundations</h3>
+<p class="zh">看懂 search、context、tool、subagent、harness，辨認過度設計、沒驗證就停、破壞資料等失敗。</p>
+<p class="en">Understand search, context, tools, subagents, harness, and failure modes.</p>
+<div class="note zh">長跑燒掉海量 token 的實用價值目前被放大。有效用法多半高度迭代，並依賴判斷力介入。</div>
+<div class="note en">Very long-horizon runs are often oversold. Skilled iterative intervention usually wins.</div></section>
+<section id="matrix"><h2 class="zh">4. 五項能力 × Claude Code / Codex</h2><h2 class="en">4. Skills × Claude Code / Codex</h2>
+<table><thead><tr><th class="zh">Ng 的能力</th><th class="en">Ng skill</th><th class="zh">你在做什麼</th><th class="en">What you are doing</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td>1. Directing the workflow</td><td class="zh">先規劃或直接做、spec 深度、何時回頭</td><td class="en">Plan first or not, spec depth, when to loop</td><td>Plan mode; Explore/Plan subagents</td><td><code>/plan</code>, <code>/goal</code></td></tr>
+<tr><td>2. Enabling agent autonomy</td><td class="zh">互動、並行、權限</td><td class="en">Interactivity, parallelism, permissions</td><td>Permissions, subagents, hooks</td><td>Approval/sandbox, <code>/permissions</code></td></tr>
+<tr><td>3. Reviewing the work</td><td class="zh">測、審、證據</td><td class="en">Test, review, evidence of done</td><td>Tests, agentic review, screenshots</td><td><code>/review</code>, PR review, browser checks</td></tr>
+<tr><td>4. Customizing environment</td><td class="zh">不用每次重講規則</td><td class="en">Stop re-explaining rules</td><td><code>CLAUDE.md</code>, Skills, hooks, MCP</td><td><code>AGENTS.md</code>, Skills, hooks, MCP</td></tr>
+<tr><td>5. Agent foundations</td><td class="zh">看懂走偏並介入</td><td class="en">See drift and intervene</td><td><code>/compact</code>, isolated subagents</td><td><code>/compact</code>, sandbox, goal check</td></tr>
+</tbody></table>
+<h3 class="zh">4.1 Directing the workflow — 日常</h3><h3 class="en">4.1 Directing the workflow — daily</h3>
+<table><thead><tr><th class="zh">動作</th><th class="en">Action</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td class="zh">先摸庫、不改檔</td><td class="en">Explore without edits</td><td class="zh">Plan mode（唯讀）；Explore/Plan agent</td><td class="en">Plan mode (read-only); Explore/Plan agents</td><td class="zh"><code>/plan</code> 或 Shift+Tab；Read Only</td><td class="en"><code>/plan</code> or Shift+Tab; Read Only</td></tr>
+<tr><td class="zh">寫 spec / 計畫</td><td class="en">Write spec / plan</td><td class="zh">先產出 spec 與分階段計畫，批准再改碼</td><td class="en">Spec and phased plan; wait for approval</td><td class="zh"><code>/plan</code>；複雜任務用 <code>/goal</code></td><td class="en"><code>/plan</code>; pin done with <code>/goal</code></td></tr>
+<tr><td class="zh">新 vs 舊專案</td><td class="en">Greenfield vs brownfield</td><td class="zh">prototype 短 prompt；brownfield 先 Explore 再寫進 <code>CLAUDE.md</code></td><td class="en">Short prompt vs explore then land in <code>CLAUDE.md</code></td><td class="zh"><code>/init</code> 產 <code>AGENTS.md</code>，補測試與禁區</td><td class="en"><code>/init</code> then add tests and off-limits paths</td></tr>
+<tr><td class="zh">拆成可驗證步</td><td class="en">Verifiable steps</td><td class="zh">每步要測試／驗收</td><td class="en">Test or acceptance on every step</td><td class="zh">每 phase 寫清 test command</td><td class="en">Name the test command per phase</td></tr>
+<tr><td class="zh">驗證失敗就回頭</td><td class="en">Loop back on failure</td><td class="zh">測試紅了回計畫第 2 步，不另開架構</td><td class="en">Return to plan step 2; no new architecture</td><td class="zh">失敗 log 貼回同 thread，或 <code>/goal resume</code></td><td class="en">Paste failing log, or <code>/goal resume</code></td></tr>
+</tbody></table>
+<p class="zh">不清楚就 Plan；清楚且範圍小就直接做。</p><p class="en">Plan when unclear; implement when the scope is small and crisp.</p>
+<h3 class="zh">4.2 Enabling agent autonomy — 日常</h3><h3 class="en">4.2 Enabling agent autonomy — daily</h3>
+<table><thead><tr><th class="zh">動作</th><th class="en">Action</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td class="zh">緊盯一步一問</td><td class="en">Stay interactive</td><td class="zh">預設互動；敏感 tool 先問</td><td class="en">Default interactive; ask before sensitive tools</td><td class="zh">較嚴 approval</td><td class="en">Stricter approval presets</td></tr>
+<tr><td class="zh">委派一整塊</td><td class="en">Delegate a chunk</td><td class="zh">照 spec 做到測試全綠</td><td class="en">Follow spec until tests are green</td><td class="zh"><code>/goal</code> + 較鬆 approval</td><td class="en"><code>/goal</code> plus looser approval</td></tr>
+<tr><td class="zh">Loop 到成功</td><td class="en">Loop until success</td><td class="zh">明確 verifier：測試、lint、驗收清單</td><td class="en">Explicit verifier: tests, lint, acceptance</td><td class="zh"><code>/goal</code> + 測試寫進 <code>AGENTS.md</code></td><td class="en"><code>/goal</code> plus tests in <code>AGENTS.md</code></td></tr>
+<tr><td class="zh">並行</td><td class="en">Parallel</td><td>Subagents; dynamic workflows</td><td class="zh">多 thread / cloud 並行</td><td class="en">Multi-agent; cloud-parallel tasks</td></tr>
+<tr><td class="zh">跨 session 保住</td><td class="en">Keep learnings</td><td class="zh">寫回 <code>CLAUDE.md</code> 或 skill</td><td class="en">Write back to <code>CLAUDE.md</code> or a skill</td><td class="zh">寫回 <code>AGENTS.md</code>；<code>/goal</code> 暫停／續跑</td><td class="en">Write to <code>AGENTS.md</code>; pause/resume <code>/goal</code></td></tr>
+<tr><td class="zh">安全放權</td><td class="en">Grant power safely</td><td class="zh">權限模式 + <code>PreToolUse</code> hook</td><td class="en">Permission modes plus PreToolUse hooks</td><td class="zh">OS sandbox + <code>/permissions</code></td><td class="en">OS sandbox plus <code>/permissions</code></td></tr>
+</tbody></table>
+<p class="zh">日常更有效：小範圍 + 明確完成條件 + 可自動驗證。</p><p class="en">Small scope + crisp done condition + automatic verifier still wins.</p>
+<h3 class="zh">4.3 Reviewing the work — 日常</h3><h3 class="en">4.3 Reviewing the work — daily</h3>
+<table><thead><tr><th class="zh">動作</th><th class="en">Action</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td class="zh">功能驗證</td><td class="en">Functional checks</td><td class="zh">指定測試指令，失敗就修</td><td class="en">Name the test command; fix until green</td><td class="zh">測試寫進 <code>AGENTS.md</code>，做完必跑</td><td class="en">Require the test after every change</td></tr>
+<tr><td class="zh">行為／體驗</td><td class="en">UX / flow checks</td><td class="zh">開 app、截圖、走 user flow</td><td class="en">Open app, screenshots, walk the flow</td><td class="zh">較擁長 browser / computer-use</td><td class="en">Often stronger at browser checks</td></tr>
+<tr><td class="zh">質性評估</td><td class="en">Qualitative eval</td><td class="zh">review skill 或 reviewer subagent</td><td class="en">Review skill or reviewer subagent</td><td class="zh"><code>/review</code>；GitHub 自動審 PR</td><td class="en"><code>/review</code>; optional PR review</td></tr>
+<tr><td class="zh">安全／架構稽核</td><td class="en">Security / architecture</td><td class="zh">獨立 review + hook 掃 secret</td><td class="en">Independent review plus secret-scan hooks</td><td class="zh">read-only sandbox 審他人 PR</td><td class="en">Read-only sandbox for untrusted PRs</td></tr>
+<tr><td class="zh">人何時介入</td><td class="en">When humans step in</td><td colspan="2" class="zh">AI 先審；人看行為、關鍵 diff 與產品判斷。</td><td colspan="2" class="en">AI reviews first. Humans inspect behavior, critical diffs, product judgment.</td></tr>
+</tbody></table>
+<p class="zh">若為了全綠而改弱測試，是 verifier 失敗。</p><p class="en">Weakening tests to go green means the verifier is broken.</p>
+<h3 class="zh">4.4 Customizing environment — 日常</h3><h3 class="en">4.4 Customizing environment — daily</h3>
+<table><thead><tr><th class="zh">放什麼</th><th class="en">What to encode</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td class="zh">專案常駐</td><td class="en">Standing instructions</td><td><code>CLAUDE.md</code> (<code>/init</code>)</td><td><code>AGENTS.md</code> (<code>/init</code>); <code>AGENTS.override.md</code></td></tr>
+<tr><td class="zh">跨工具</td><td class="en">Cross-tool</td><td class="zh"><code>AGENTS.md</code> 主檔，<code>CLAUDE.md</code> symlink 或 <code>@AGENTS.md</code></td><td class="en"><code>AGENTS.md</code> canonical; symlink from <code>CLAUDE.md</code></td><td class="zh">原生讀 <code>AGENTS.md</code></td><td class="en">Reads <code>AGENTS.md</code> natively</td></tr>
+<tr><td class="zh">重複流程</td><td class="en">Repeatable workflows</td><td><code>.claude/skills/<name>/SKILL.md</code></td><td>Skills + slash commands</td></tr>
+<tr><td class="zh">確定性自動</td><td class="en">Deterministic automation</td><td>Hooks: PreToolUse / PostToolUse</td><td>Hooks: PreToolUse / PostToolUse / Stop / Interrupt</td></tr>
+<tr><td class="zh">外部系統</td><td class="en">External systems</td><td>MCP (<code>.mcp.json</code>)</td><td>MCP (<code>config.toml</code>)</td></tr>
+<tr><td class="zh">清技術債</td><td class="en">Clear agent debt</td><td colspan="2" class="zh">定期叫它找出自己製造、沒人要的抽象；限制亂加 dependency。</td><td colspan="2" class="en">Ask it to find unused abstractions; constrain casual new dependencies.</td></tr>
+</tbody></table>
+<p class="zh"><strong>分工：</strong><code>AGENTS.md</code> 放 build/test、目錄地圖、禁區、Definition of Done；工具專屬的 skills/hooks/權限放 <code>CLAUDE.md</code> 或 Codex override。</p>
+<p class="en"><strong>Split:</strong> shared rules in <code>AGENTS.md</code>; tool-specific skills and permissions in <code>CLAUDE.md</code> or a Codex override.</p>
+<h3 class="zh">4.5 Foundations — 日常觀察</h3><h3 class="en">4.5 Foundations — what to watch</h3>
+<table><thead><tr><th class="zh">看什麼</th><th class="en">What to watch</th><th>Claude Code</th><th>Codex</th></tr></thead><tbody>
+<tr><td class="zh">怎麼搜程式</td><td class="en">How it searches</td><td class="zh">是否亂掃；是否改用 Explore</td><td class="en">Thrashing vs Explore agent</td><td class="zh">是否先讀對檔；<code>/mention</code></td><td class="en">Right files first; <code>/mention</code></td></tr>
+<tr><td class="zh">Context 爆掉</td><td class="en">Context bloat</td><td><code>/compact</code>; 結論寫回 md</td><td><code>/compact</code>, <code>/status</code></td></tr>
+<tr><td class="zh">Tool/MCP 吃 context</td><td class="en">Tools eating context</td><td colspan="2" class="zh">少掛用不到的 MCP；過時 skill 刪掉。</td><td colspan="2" class="en">Unplug unused MCP; delete obsolete skills.</td></tr>
+<tr><td class="zh">典型失敗</td><td class="en">Failure modes</td><td class="zh">小事過度設計、沒驗證就停、亂改正式資料</td><td class="en">Overengineering, no verifier, touching prod data</td><td class="zh">goal 未到就宣告完成、繞過權限</td><td class="en">Declaring done early; bypassing sandbox</td></tr>
+</tbody></table>
+<ol class="zh"><li>有沒先讀 spec／計畫？</li><li>完成條件是測試過還是「它覺得好了」？</li><li>權限夠不夠大到毀掉資料？</li><li>這次學到的規則有沒寫回 md？</li></ol>
+<ol class="en"><li>Did it read the spec first?</li><li>Is done = tests passing?</li><li>Are permissions wide enough to destroy data?</li><li>Were corrections written back to md?</li></ol></section>
+<section id="daily"><h2 class="zh">5. 可直接套用的日常流程</h2><h2 class="en">5. Daily loop</h2>
+<ol class="zh">
+<li><strong>Planning。</strong> Plan mode 或 <code>/plan</code> → spec、分步計畫、每步驗證。人只審假設、安全、過度設計。</li>
+<li><strong>Execution。</strong> 小改互動；大改 goal + 測試迴圈。權限夠用不無限。</li>
+<li><strong>Review。</strong> 換角色審或交叉審。測試由你指定。</li>
+<li><strong>Customize。</strong> 反復精正寫進 md / skill / hook。</li>
+<li><strong>Monitor。</strong> 部署後 MCP 或 CI hook 看 log，再走 plan → patch → verify。</li>
+</ol>
+<ol class="en">
+<li><strong>Planning.</strong> Plan mode or <code>/plan</code> → spec, phases, verifiers. Humans check assumptions and security only.</li>
+<li><strong>Execution.</strong> Interactive on small edits; goal + tests on larger work. Enough permission, not unlimited.</li>
+<li><strong>Review.</strong> Fresh session or cross-review. You specify tests.</li>
+<li><strong>Customize.</strong> Promote corrections into markdown, a skill, or a hook.</li>
+<li><strong>Monitor.</strong> Logs via MCP or CI; re-enter plan → patch → verify.</li>
+</ol>
+<div class="note zh">起手式：先寫好 <code>AGENTS.md</code>（Claude 加 <code>CLAUDE.md</code>）的測試指令與禁區。</div>
+<div class="note en">Start with test commands and off-limits paths in <code>AGENTS.md</code> (and <code>CLAUDE.md</code>).</div></section>
+<section><h2 class="zh">6. 未涵蓋</h2><h2 class="en">6. Not included</h2>
+<p class="zh">未轉載信件全文；未展開系列其他篇。</p>
+<p class="en">No reprint of the letter; other Skills Map parts are not expanded here.</p></section>
+<footer><p class="zh">2026-09-15 對話整理，非正式出版。</p><p class="en">Compiled 15 September 2026. Conversation memo, not official.</p></footer>
+</div>
+<script>function setLang(lang){document.documentElement.setAttribute('data-lang',lang);document.documentElement.lang=lang==='zh'?'zh-Hant':'en';document.getElementById('btn-zh').classList.toggle('active',lang==='zh');document.getElementById('btn-en').classList.toggle('active',lang==='en');try{localStorage.setItem('skills-map-lang',lang)}catch(e){}}setLang(localStorage.getItem('skills-map-lang')||'zh');</script>
+</body></html>

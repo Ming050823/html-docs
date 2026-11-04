@@ -1,0 +1,1304 @@
+<title>Cloud Automation Map · 雲端自動化地圖</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+TC:wght@600;700;900&family=Noto+Sans+TC:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#F2F4F1;
+    --paper-raised:#FFFFFF;
+    --ink:#1B2028;
+    --ink-soft:#565D66;
+    --line:rgba(27,32,40,0.14);
+    --amber:#B8801E;
+    --amber-soft:#F4E6C9;
+    --violet:#6B4F8C;
+    --violet-soft:#EAE3F2;
+    --stop:#A6433C;
+    --stop-soft:#F5DEDB;
+    --gh:#3E4C78;
+    --gh-soft:#E1E4EF;
+    --web:#2E7DA6;
+    --web-soft:#DCEEF5;
+    --trig:#8C4B7A;
+    --trig-soft:#EFE0EA;
+    --shadow: 0 1px 2px rgba(27,32,40,.05), 0 8px 24px rgba(27,32,40,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#14171B;
+      --paper-raised:#1C2025;
+      --ink:#ECEEF0;
+      --ink-soft:#A9AFB8;
+      --line:rgba(236,238,240,0.16);
+      --amber:#D9A653;
+      --amber-soft:rgba(217,166,83,0.16);
+      --violet:#B49BDA;
+      --violet-soft:rgba(180,155,218,0.16);
+      --stop:#D9807A;
+      --stop-soft:rgba(217,128,122,0.16);
+      --gh:#8891C4;
+      --gh-soft:rgba(136,145,196,0.18);
+      --web:#5FB3DE;
+      --web-soft:rgba(95,179,222,0.15);
+      --trig:#C98AB8;
+      --trig-soft:rgba(201,138,184,0.16);
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#14171B;
+    --paper-raised:#1C2025;
+    --ink:#ECEEF0;
+    --ink-soft:#A9AFB8;
+    --line:rgba(236,238,240,0.16);
+    --amber:#D9A653;
+    --amber-soft:rgba(217,166,83,0.16);
+    --violet:#B49BDA;
+    --violet-soft:rgba(180,155,218,0.16);
+    --stop:#D9807A;
+    --stop-soft:rgba(217,128,122,0.16);
+    --gh:#8891C4;
+    --gh-soft:rgba(136,145,196,0.18);
+    --web:#5FB3DE;
+    --web-soft:rgba(95,179,222,0.15);
+    --trig:#C98AB8;
+    --trig-soft:rgba(201,138,184,0.16);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .lang-zh{font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;}
+  .lang-en{font-family:'IBM Plex Sans','Segoe UI',sans-serif;}
+
+  .lang-panel[hidden]{display:none;}
+
+  .lang-switch{
+    position:fixed;
+    top:20px;right:24px;
+    z-index:50;
+    display:flex;
+    gap:2px;
+    padding:3px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:999px;
+    box-shadow:var(--shadow);
+  }
+  .lang-switch-btn{
+    appearance:none;border:none;
+    padding:6px 14px;
+    border-radius:999px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--ink-soft);
+    background:transparent;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .lang-switch-btn[aria-pressed="true"]{
+    background:var(--amber-soft);
+    color:var(--amber);
+  }
+  .lang-switch-btn:hover{color:var(--ink);}
+  .lang-switch-btn[aria-pressed="true"]:hover{color:var(--amber);}
+  .lang-switch-btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+  @media (max-width:640px){
+    .lang-switch{
+      position:static;
+      margin:0 0 18px;
+      width:fit-content;
+    }
+  }
+
+  .page{
+    max-width:960px;
+    margin:0 auto;
+    padding:56px 28px 80px;
+  }
+  h1,h2,h3{
+    text-wrap:balance;
+    margin:0;
+  }
+  .lang-zh h1,.lang-zh h2,.lang-zh h3{font-family:'Noto Serif TC','Songti TC',serif;}
+  .lang-en h1,.lang-en h2,.lang-en h3{font-family:'Fraunces','Iowan Old Style',Georgia,serif;}
+  .eyebrow{
+    font-family:'IBM Plex Mono','Cascadia Code',ui-monospace,monospace;
+    font-size:12px;
+    letter-spacing:.08em;
+    color:var(--stop);
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  h1{
+    font-size:clamp(28px,4vw,38px);
+    font-weight:900;
+    line-height:1.22;
+  }
+  .dek{
+    margin:16px 0 0;
+    font-size:16px;
+    line-height:1.75;
+    color:var(--ink-soft);
+    max-width:64ch;
+  }
+  .hero-meta{
+    margin-top:22px;
+    font-size:13px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+  }
+  .hero-meta b{color:var(--ink);font-weight:600;}
+
+  .legend{
+    margin-top:36px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    padding:16px 18px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+  }
+  .legend-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:var(--ink-soft);
+  }
+  .swatch{
+    width:11px;height:11px;border-radius:3px;flex:none;
+  }
+  .sw-amber{background:var(--amber);}
+  .sw-violet{background:var(--violet);}
+  .sw-gh{background:var(--gh);}
+  .sw-web{background:var(--web);}
+  .sw-trig{background:var(--trig);}
+  .sw-stop{background:var(--stop);}
+
+  section{margin-top:56px;}
+  .section-head{margin-bottom:22px;}
+  .section-head h2{font-size:22px;font-weight:700;}
+  .section-head p{margin:8px 0 0;font-size:14.5px;color:var(--ink-soft);line-height:1.7;max-width:64ch;}
+
+  figure{margin:0;}
+  .fig-scroll{
+    overflow-x:auto;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:8px;
+  }
+  .fig-scroll svg{display:block;width:100%;height:auto;min-width:600px;}
+  figcaption{
+    margin-top:12px;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.6;
+  }
+
+  .lang-zh svg text{font-family:'Noto Sans TC',sans-serif;}
+  .lang-en svg text{font-family:'IBM Plex Sans',sans-serif;}
+  .n-title{font-weight:600;fill:var(--ink);}
+  .lang-zh .n-title{font-size:14.5px;}
+  .lang-en .n-title{font-size:14.5px;}
+  .n-sub{fill:var(--ink-soft);}
+  .lang-zh .n-sub{font-size:11px;}
+  .lang-en .n-sub{font-size:11px;}
+  .n-mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;fill:var(--ink-soft);letter-spacing:.02em;}
+  .n-label{font-size:11px;fill:var(--ink-soft);font-weight:600;}
+  .n-badge{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:10.5px;font-weight:600;}
+
+  .box{stroke-width:1.6;}
+  .spine .box{fill:var(--paper-raised);stroke:var(--ink);stroke-opacity:.55;}
+  .lane-amber .box{fill:var(--amber-soft);stroke:var(--amber);}
+  .lane-violet .box{fill:var(--violet-soft);stroke:var(--violet);}
+  .lane-gh .box{fill:var(--gh-soft);stroke:var(--gh);}
+  .lane-web .box{fill:var(--web-soft);stroke:var(--web);}
+  .lane-trig .box{fill:var(--trig-soft);stroke:var(--trig);}
+  .lane-stop .box{fill:var(--stop-soft);stroke:var(--stop);stroke-dasharray:4 3;}
+  .end-pill{fill:var(--amber);stroke:none;}
+  .end-pill-text{fill:var(--paper);font-weight:700;}
+  .lang-zh .end-pill-text{font-size:15px;}
+  .lang-en .end-pill-text{font-size:15px;}
+
+  .flow{fill:none;stroke:var(--ink);stroke-opacity:.45;stroke-width:1.6;}
+  .flow-gh{stroke:var(--gh);stroke-opacity:.85;}
+  .flow-web{stroke:var(--web);stroke-opacity:.85;}
+  .flow-trig{stroke:var(--trig);stroke-opacity:.85;}
+  .flow-stop{stroke:var(--stop);stroke-opacity:.85;stroke-dasharray:4 3;}
+  .flow-violet{stroke:var(--violet);stroke-opacity:.85;}
+  .flow-amber{stroke:var(--amber);stroke-opacity:.85;}
+
+  .stage-list{
+    display:flex;flex-direction:column;gap:0;
+    border-top:1px solid var(--line);
+  }
+  .stage-row{
+    display:grid;
+    grid-template-columns:120px 1fr;
+    gap:18px;
+    padding:18px 4px;
+    border-bottom:1px solid var(--line);
+  }
+  .stage-num{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:12px;
+    color:var(--stop);
+    font-weight:600;
+    padding-top:2px;
+  }
+  .stage-num span{display:block;font-size:20px;color:var(--ink);font-weight:700;margin-top:2px;}
+  .lang-zh .stage-num span{font-family:'Noto Serif TC',serif;}
+  .lang-en .stage-num span{font-family:'Fraunces',serif;}
+  .stage-body h3{font-size:15.5px;font-weight:700;}
+  .lang-zh .stage-body h3{font-family:'Noto Sans TC',sans-serif;}
+  .lang-en .stage-body h3{font-family:'IBM Plex Sans',sans-serif;}
+  .stage-body p{margin:6px 0 0;font-size:14px;line-height:1.75;color:var(--ink-soft);}
+  .stage-body p b{color:var(--ink);font-weight:600;}
+  .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:10.5px;
+    padding:2px 7px;
+    border-radius:5px;
+    margin-left:8px;
+    vertical-align:1px;
+  }
+  .tag-diff{background:var(--stop-soft);color:var(--stop);}
+
+  .callout{
+    margin-top:56px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+  }
+  .callout-card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:20px 22px;
+    box-shadow:var(--shadow);
+  }
+  .callout-card.good{border-left:4px solid var(--web);}
+  .callout-card.warn{border-left:4px solid var(--stop);}
+  .callout-card h3{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .lang-zh .callout-card h3{font-family:'Noto Sans TC',sans-serif;}
+  .lang-en .callout-card h3{font-family:'IBM Plex Sans',sans-serif;}
+  .callout-card p{margin:10px 0 0;font-size:13.5px;line-height:1.75;color:var(--ink-soft);}
+
+  footer{
+    margin-top:60px;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+  }
+
+  @media (max-width:640px){
+    .stage-row{grid-template-columns:1fr;}
+    .stage-num{display:flex;align-items:baseline;gap:8px;}
+    .stage-num span{margin-top:0;}
+    .callout{grid-template-columns:1fr;}
+  }
+
+  .prompt-cta{
+    margin-top:20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:18px 22px;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+  }
+  .prompt-cta-text{flex:1;min-width:220px;}
+  .prompt-cta-text strong{display:block;font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+  .prompt-cta-text span{font-size:13px;color:var(--ink-soft);line-height:1.6;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 18px;
+    border-radius:9px;
+    border:1.5px solid var(--amber);
+    background:var(--amber-soft);
+    color:var(--amber);
+    font-size:13.5px;
+    font-weight:600;
+    line-height:1;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .lang-zh .btn{font-family:'Noto Sans TC',sans-serif;}
+  .lang-en .btn{font-family:'IBM Plex Sans',sans-serif;}
+  .btn:hover{box-shadow:var(--shadow);transform:translateY(-1px);}
+  .btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+  .btn svg{flex:none;}
+
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(10,12,14,.6);
+    display:flex;align-items:center;justify-content:center;
+    padding:28px;
+    z-index:100;
+  }
+  .modal-overlay[hidden]{display:none;}
+  .modal-panel{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    max-width:820px;width:100%;
+    max-height:82vh;
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+  .modal-head{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .modal-head h3{font-size:17px;font-weight:700;margin:0;}
+  .lang-zh .modal-head h3{font-family:'Noto Serif TC',serif;}
+  .lang-en .modal-head h3{font-family:'Fraunces',serif;}
+  .modal-actions{display:flex;align-items:center;gap:10px;}
+  .icon-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .icon-btn:hover{background:var(--amber-soft);color:var(--amber);border-color:var(--amber);}
+  .icon-btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+  .modal-body{overflow:auto;}
+  .modal-body pre{
+    margin:0;
+    padding:22px 24px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:12px;
+    line-height:1.7;
+    color:var(--ink);
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .copy-feedback{
+    font-size:12px;
+    color:var(--amber);
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .copy-feedback.show{opacity:1;}
+
+  @media (prefers-reduced-motion: reduce){
+    .btn,.icon-btn,.copy-feedback,.lang-switch-btn{transition:none;}
+  }
+  @media (max-width:640px){
+    .prompt-cta{flex-direction:column;align-items:stretch;}
+    .prompt-cta .btn{justify-content:center;}
+  }
+</style>
+
+<div class="lang-switch" role="group" aria-label="Language / 語言切換">
+  <button type="button" class="lang-switch-btn" id="langBtnZh" aria-pressed="true">中文</button>
+  <button type="button" class="lang-switch-btn" id="langBtnEn" aria-pressed="false">EN</button>
+</div>
+
+<div class="lang-panel lang-zh" id="panel-zh">
+<div class="page">
+
+  <p class="eyebrow">原始版本・需要 GITHUB 帳號</p>
+  <h1>雲端自動化地圖</h1>
+  <p class="dek">這是你一開始拿到的那份 prompt：自動化寫好之後，交給 GitHub Actions、Vercel／Netlify 或 Trigger.dev 這類雲端平台代管，24 小時不斷電執行。跟「本機自動化地圖」判斷能不能自動化的邏輯完全一樣，差別只在最後交給誰負責準時執行。</p>
+  <div class="hero-meta">
+    <span><b>六個階段</b>　從訪談到交接</span>
+    <span><b>三選一部署平台</b>　GitHub Actions・Vercel/Netlify・Trigger.dev</span>
+    <span><b>至少兩個雲端帳號</b>　GitHub，加上其中一個部署平台</span>
+  </div>
+
+  <div class="legend" role="note" aria-label="圖中顏色代表的意思">
+    <div class="legend-item"><span class="swatch sw-amber"></span>排程／事件觸發・失敗通知</div>
+    <div class="legend-item"><span class="swatch sw-gh"></span>GitHub Actions（固定排程用）</div>
+    <div class="legend-item"><span class="swatch sw-web"></span>Vercel／Netlify（被其他服務呼叫用）</div>
+    <div class="legend-item"><span class="swatch sw-trig"></span>Trigger.dev（逐步畫面・長迴圈・輪詢用）</div>
+    <div class="legend-item"><span class="swatch sw-violet"></span>AI 判斷（獨立成函式，呼叫模型 API）</div>
+    <div class="legend-item"><span class="swatch sw-stop"></span>無法自動化／執行失敗</div>
+  </div>
+
+  <div class="prompt-cta">
+    <div class="prompt-cta-text">
+      <strong>完整 Prompt 原文（雲端／原始版）</strong>
+      <span>這張圖是說明用的簡化版；如果你想直接比對，或是另外保存這份最原始的版本，這裡有逐字稿可以複製。</span>
+    </div>
+    <button type="button" class="btn" id="openPromptBtn-zh">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="4" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 9.5V2.5a1 1 0 0 1 1-1H10" stroke="currentColor" stroke-width="1.4"/></svg>
+      查看並複製全文
+    </button>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>建置流程：六個階段怎麼走</h2>
+      <p>前兩個階段跟本機版一模一樣。分岔點出現在 Stage 4：這裡選的不是「有沒有 API」，而是「該把它交給哪個雲端平台代管」。</p>
+    </div>
+
+    <figure>
+      <div class="fig-scroll">
+        <svg viewBox="0 0 960 1200" role="img" aria-label="流程圖：Stage 1 訪談，若某個服務沒有API就誠實告知做不到、不會有替代方案。有API的部分進入Stage 2寫成SPEC.md，Stage 3寫成單一的本機固定程式，需要判斷的部分獨立成函式呼叫模型API，經乾跑測試、正式執行一次、本機git commit。Stage 4依觸發方式三選一：固定排程選GitHub Actions、被其他服務呼叫選Vercel或Netlify、需要逐步畫面或長迴圈或輪詢選Trigger.dev。Stage 5依平台分別完成部署步驟，三條路徑最後收斂。Stage 6讀取正式執行紀錄、確認失敗通知已開、寫README.md、全部commit，最後自動化正式上線、24小時雲端運作。">
+          <defs>
+            <marker id="cah-ink-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)" fill-opacity=".55"/>
+            </marker>
+            <marker id="cah-stop-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--stop)"/>
+            </marker>
+            <marker id="cah-gh-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--gh)"/>
+            </marker>
+            <marker id="cah-web-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--web)"/>
+            </marker>
+            <marker id="cah-trig-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--trig)"/>
+            </marker>
+          </defs>
+
+          <!-- Stage 1 -->
+          <g class="spine">
+            <rect class="box" x="240" y="24" width="480" height="68" rx="14"/>
+            <text class="n-title" x="480" y="52" text-anchor="middle">Stage 1・訪談</text>
+            <text class="n-sub" x="480" y="72" text-anchor="middle">問需求、有沒有 GitHub 帳號、每個服務有沒有 API</text>
+          </g>
+          <path class="flow" d="M480,92 L480,96" marker-end="url(#cah-ink-zh)"/>
+
+          <!-- Diamond D1 -->
+          <g>
+            <polygon class="box" points="480,96 590,150 480,204 370,150" fill="var(--paper-raised)" stroke="var(--ink)" stroke-opacity=".55"/>
+            <text class="n-label" x="480" y="146" text-anchor="middle">服務有 API／匯出？</text>
+            <text class="n-sub" x="480" y="162" text-anchor="middle">（每個服務問一次）</text>
+          </g>
+
+          <path class="flow" d="M370,150 L300,150 L300,240" marker-end="url(#cah-ink-zh)"/>
+          <text class="n-label" x="300" y="196" text-anchor="middle">有 API</text>
+
+          <path class="flow flow-stop" d="M590,150 L660,150" marker-end="url(#cah-stop-zh)"/>
+          <text class="n-label" x="622" y="140" text-anchor="middle" fill="var(--stop)">沒有 API</text>
+
+          <g class="lane-stop">
+            <rect class="box" x="700" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="800" y="140" text-anchor="middle" fill="var(--stop)">✕ 這步驟做不到</text>
+            <text class="n-sub" x="800" y="160" text-anchor="middle">誠實告知，</text>
+            <text class="n-sub" x="800" y="176" text-anchor="middle">找最接近的替代方案</text>
+          </g>
+
+          <!-- Stage 2 -->
+          <g class="spine">
+            <rect class="box" x="240" y="240" width="480" height="68" rx="14"/>
+            <text class="n-title" x="270" y="268" text-anchor="start">Stage 2・確認計畫</text>
+            <text class="n-sub" x="270" y="288" text-anchor="start">寫成六個欄位的規格，你點頭才開始寫程式</text>
+            <text class="n-badge" x="690" y="278" text-anchor="end" fill="var(--amber)">SPEC.md</text>
+          </g>
+
+          <path class="flow" d="M480,308 L480,344" marker-end="url(#cah-ink-zh)"/>
+
+          <!-- Stage 3 -->
+          <g class="spine">
+            <rect class="box" x="240" y="344" width="480" height="108" rx="14"/>
+            <text class="n-title" x="270" y="372" text-anchor="start">Stage 3・建置與測試</text>
+            <text class="n-sub" x="270" y="392" text-anchor="start">全部寫成單一的本機固定程式：去重・重試・清楚記錄</text>
+            <text class="n-sub" x="270" y="410" text-anchor="start" fill="var(--violet)">需要判斷的部分獨立成函式，呼叫模型 API（要另外申請金鑰）</text>
+            <text class="n-sub" x="270" y="428" text-anchor="start">先乾跑測試給你看，你確認才正式執行一次</text>
+          </g>
+
+          <path class="flow" d="M480,452 L480,488" marker-end="url(#cah-ink-zh)"/>
+
+          <g class="spine">
+            <rect class="box" x="240" y="488" width="480" height="64" rx="14"/>
+            <text class="n-title" x="270" y="516" text-anchor="start">本機 git commit</text>
+            <text class="n-sub" x="270" y="536" text-anchor="start">先留在本機，稍後才會 push 上 GitHub</text>
+            <text class="n-badge" x="690" y="526" text-anchor="end" fill="var(--stop)">尚未上線</text>
+          </g>
+
+          <path class="flow" d="M480,552 L480,588" marker-end="url(#cah-ink-zh)"/>
+
+          <!-- Diamond D2 -->
+          <g>
+            <polygon class="box" points="480,588 590,642 480,696 370,642" fill="var(--paper-raised)" stroke="var(--ink)" stroke-opacity=".55"/>
+            <text class="n-label" x="480" y="638" text-anchor="middle">選哪個雲端平台？</text>
+            <text class="n-sub" x="480" y="654" text-anchor="middle">（依觸發方式決定）</text>
+          </g>
+
+          <path class="flow flow-gh" d="M480,696 Q480,732 170,732" marker-end="url(#cah-gh-zh)"/>
+          <path class="flow flow-web" d="M480,696 L480,732" marker-end="url(#cah-web-zh)"/>
+          <path class="flow flow-trig" d="M480,696 Q480,732 790,732" marker-end="url(#cah-trig-zh)"/>
+          <text class="n-sub" x="230" y="718" text-anchor="middle" fill="var(--gh)">固定排程</text>
+          <text class="n-sub" x="480" y="716" text-anchor="middle" fill="var(--web)">被其他服務呼叫</text>
+          <text class="n-sub" x="740" y="718" text-anchor="middle" fill="var(--trig)">逐步畫面／輪詢</text>
+
+          <!-- Lane headers -->
+          <g class="lane-gh">
+            <rect class="box" x="30" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="170" y="758" text-anchor="middle" fill="var(--gh)">GitHub Actions</text>
+            <text class="n-sub" x="170" y="778" text-anchor="middle">固定排程</text>
+          </g>
+          <g class="lane-web">
+            <rect class="box" x="340" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="480" y="758" text-anchor="middle" fill="var(--web)">Vercel／Netlify</text>
+            <text class="n-sub" x="480" y="778" text-anchor="middle">被其他服務呼叫（webhook）</text>
+          </g>
+          <g class="lane-trig">
+            <rect class="box" x="650" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="790" y="758" text-anchor="middle" fill="var(--trig)">Trigger.dev</text>
+            <text class="n-sub" x="790" y="778" text-anchor="middle">逐步畫面・長迴圈・輪詢</text>
+          </g>
+
+          <path class="flow flow-gh" d="M170,792 L170,816" marker-end="url(#cah-gh-zh)"/>
+          <path class="flow flow-web" d="M480,792 L480,816" marker-end="url(#cah-web-zh)"/>
+          <path class="flow flow-trig" d="M790,792 L790,816" marker-end="url(#cah-trig-zh)"/>
+
+          <!-- Lane bodies -->
+          <g class="lane-gh">
+            <rect class="box" x="30" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="170" y="848" text-anchor="middle" fill="var(--gh)">建 repo、push 程式碼</text>
+            <text class="n-sub" x="170" y="868" text-anchor="middle">Settings 加 Secrets</text>
+            <text class="n-sub" x="170" y="884" text-anchor="middle">workflow.yml＋手動觸發鈕</text>
+          </g>
+          <g class="lane-web">
+            <rect class="box" x="340" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="480" y="848" text-anchor="middle" fill="var(--web)">連接 repo</text>
+            <text class="n-sub" x="480" y="868" text-anchor="middle">Project 加環境變數</text>
+            <text class="n-sub" x="480" y="884" text-anchor="middle">Deploy 後呼叫網址測試</text>
+          </g>
+          <g class="lane-trig">
+            <rect class="box" x="650" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="790" y="848" text-anchor="middle" fill="var(--trig)">建立專案</text>
+            <text class="n-sub" x="790" y="868" text-anchor="middle">Dashboard 設環境變數</text>
+            <text class="n-sub" x="790" y="884" text-anchor="middle">CLI 部署、觸發測試</text>
+          </g>
+
+          <path class="flow flow-gh" d="M170,912 Q170,952 480,952" marker-end="url(#cah-ink-zh)"/>
+          <path class="flow flow-web" d="M480,912 L480,952" marker-end="url(#cah-ink-zh)"/>
+          <path class="flow flow-trig" d="M790,912 Q790,952 480,952" marker-end="url(#cah-ink-zh)"/>
+          <path class="flow" d="M480,952 L480,960" marker-end="url(#cah-ink-zh)"/>
+
+          <!-- Stage 6 -->
+          <g class="spine">
+            <rect class="box" x="240" y="960" width="480" height="84" rx="14"/>
+            <text class="n-title" x="270" y="988" text-anchor="start">Stage 6・驗證交接</text>
+            <text class="n-sub" x="270" y="1008" text-anchor="start">讀該平台的正式執行紀錄，確認失敗通知已開</text>
+            <text class="n-sub" x="270" y="1024" text-anchor="start">寫 README.md，全部 commit</text>
+          </g>
+
+          <path class="flow" d="M480,1044 L480,1080" marker-end="url(#cah-ink-zh)"/>
+
+          <!-- End pill -->
+          <g>
+            <rect class="end-pill" x="280" y="1080" width="400" height="64" rx="32"/>
+            <text class="end-pill-text" x="480" y="1118" text-anchor="middle">正式上線，24 小時雲端運作</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>圖 1・跟本機版最大的不同在兩處：沒有 API 的服務直接誠實告知做不到（沒有瀏覽器操作可以頂替）；Stage 4 選的是三選一的雲端平台，不是三條並行路徑。</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>六個階段，逐句說明</h2>
+      <p>跟本機版比對著看的話，差異都出現在 Stage 3 到 Stage 5。</p>
+    </div>
+    <div class="stage-list">
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>1</span></div>
+        <div class="stage-body">
+          <h3>訪談</h3>
+          <p>跟本機版一樣問需求、資料來源、多久做一次，但多問一句「你有沒有 GitHub 帳號」。針對每個外部服務，一樣會問有沒有 <b>API</b>；差別是：沒有的話，這裡直接誠實告知這步驟做不到，<b>不會</b>像本機版那樣改用瀏覽器操作頂替。</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>2</span></div>
+        <div class="stage-body">
+          <h3>確認計畫</h3>
+          <p>跟本機版完全一樣：整理成 <b>SPEC.md</b>，老實告訴你取捨與成本，你點頭才開始寫程式。</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>3</span></div>
+        <div class="stage-body">
+          <h3>建置與測試<span class="tag tag-diff">跟本機版不同</span></h3>
+          <p>本機版會依每個步驟分成三條路（本機腳本・Chrome 操作・AI 判斷）；這裡<b>只有一條路</b>：全部寫成同一份固定程式。需要判斷的部分一樣獨立成一個函式，但因為沒有現場醒著的 Claude 可以借用，這個函式得自己<b>呼叫模型 API</b> 完成判斷——代表你要另外申請一把模型金鑰，這是本機版不需要的成本。一樣先乾跑測試給你看結果，確認沒問題才正式跑一次，最後存進本機 git（此時還沒 push，只是留一份修改歷史）。</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>4</span></div>
+        <div class="stage-body">
+          <h3>選擇部署平台<span class="tag tag-diff">跟本機版不同</span></h3>
+          <p>本機版這裡是確認本機執行的限制；這裡改成依觸發方式三選一：固定排程選 <b>GitHub Actions</b>；被其他服務呼叫（例如表單送出、webhook）選 <b>Vercel</b> 或 <b>Netlify</b>；需要逐步查看每次執行過程、長迴圈或輪詢選 <b>Trigger.dev</b>。會先確認你手上已經有哪些帳號。</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>5</span></div>
+        <div class="stage-body">
+          <h3>手把手部署<span class="tag tag-diff">跟本機版不同</span></h3>
+          <p>依選定的平台，一步一步陪你做：<b>GitHub Actions</b> 要建立 repo（一個放程式碼的雲端資料夾）、push 上去、在 Settings → Secrets 加金鑰、寫一份排程用的 workflow.yml，並加上手動觸發鈕，最後在 Actions 分頁跑一次、開啟失敗信件通知。<b>Vercel／Netlify</b> 要連接 repo、在專案設定加環境變數、部署，再呼叫一次網址測試。<b>Trigger.dev</b> 要建立專案、在 Dashboard 設環境變數、用命令列工具部署、觸發一次測試執行。</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>6</span></div>
+        <div class="stage-body">
+          <h3>驗證交接</h3>
+          <p>跟本機版一樣：一起讀正式執行的紀錄（這裡是讀該雲端平台的紀錄，不是本機的），確認失敗通知有開，寫 <b>README.md</b>，全部 commit，完成交接。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>排程或事件一觸發，實際發生什麼事</h2>
+      <p>跟本機版最大的差別：喚醒的不是你電腦上的 Claude，而是雲端平台自己。</p>
+    </div>
+    <figure>
+      <div class="fig-scroll">
+        <svg viewBox="0 0 1200 320" role="img" aria-label="執行時流程圖：排程時間到或事件發生後，由你選定的雲端平台（GitHub Actions、Vercel或Trigger.dev其中一個）執行你的程式；若有AI判斷步驟，就呼叫模型API完成；最後產出結果，例如寄信、寫入表格或發訊息。若這次執行失敗，平台會寄失敗通知信給你。">
+          <defs>
+            <marker id="cah2-ink-zh" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)" fill-opacity=".55"/>
+            </marker>
+          </defs>
+
+          <path class="flow" d="M230,150 L300,150" marker-end="url(#cah2-ink-zh)"/>
+          <path class="flow" d="M580,150 L650,150" marker-end="url(#cah2-ink-zh)"/>
+          <path class="flow" d="M850,150 L920,150" marker-end="url(#cah2-ink-zh)"/>
+          <path class="flow flow-stop" d="M440,195 L440,230" marker-end="url(#cah2-ink-zh)"/>
+
+          <g class="lane-amber">
+            <rect class="box" x="30" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="130" y="144" text-anchor="middle" fill="var(--amber)">排程／事件</text>
+            <text class="n-sub" x="130" y="164" text-anchor="middle">觸發這次執行</text>
+          </g>
+
+          <g class="spine">
+            <rect class="box" x="300" y="105" width="280" height="90" rx="12"/>
+            <text class="n-title" x="440" y="140" text-anchor="middle">平台執行你的程式</text>
+            <text class="n-sub" x="440" y="160" text-anchor="middle">GitHub Actions／Vercel／Trigger.dev</text>
+          </g>
+
+          <g class="lane-violet">
+            <rect class="box" x="650" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="750" y="144" text-anchor="middle" fill="var(--violet)">AI 判斷步驟</text>
+            <text class="n-sub" x="750" y="164" text-anchor="middle">呼叫模型 API 完成</text>
+          </g>
+
+          <g class="spine">
+            <rect class="box" x="920" y="110" width="240" height="80" rx="12"/>
+            <text class="n-title" x="1040" y="144" text-anchor="middle">產出結果</text>
+            <text class="n-sub" x="1040" y="164" text-anchor="middle">寄信・寫入表格・發訊息</text>
+          </g>
+
+          <g class="lane-stop">
+            <rect class="box" x="310" y="230" width="260" height="70" rx="12"/>
+            <text class="n-title" x="440" y="256" text-anchor="middle" fill="var(--stop)">✕ 執行失敗</text>
+            <text class="n-sub" x="440" y="274" text-anchor="middle">平台寄失敗通知信給你</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>圖 2・整個迴圈完全不需要你的電腦或 Claude App 開著——這是雲端版本換來的「全天候」。</figcaption>
+    </figure>
+  </section>
+
+  <section class="callout">
+    <div class="callout-card good">
+      <h3>✓ 換來的是真正的全天候</h3>
+      <p>雲端部署 24 小時不斷電執行，不需要你的電腦開機、不需要 Claude App 保持連線。如果自動化的重點是「不管你在不在都要準時跑」，這是三種做法裡唯一能做到的版本。</p>
+    </div>
+    <div class="callout-card warn">
+      <h3>⚠ 代價是帳號與設定的複雜度</h3>
+      <p>你至少要申請並管理兩個帳號（GitHub，加上 Vercel／Netlify／Trigger.dev 其中一個），每個平台介面、金鑰設定方式都不一樣；沒有 API 的服務也完全無法涵蓋，不像本機版能用瀏覽器操作頂替。</p>
+    </div>
+  </section>
+
+  <footer>
+    對照文件：本機自動化地圖（本機版 automation-prompt-local.md）　／　本頁僅供閱讀說明，複製功能除外皆無其他互動
+  </footer>
+
+</div>
+
+</div>
+
+<div class="lang-panel lang-en" id="panel-en" hidden>
+<div class="page">
+
+  <p class="eyebrow">ORIGINAL VERSION · REQUIRES A GITHUB ACCOUNT</p>
+  <h1>Cloud Automation Map</h1>
+  <p class="dek">This is the prompt you started with: once built, the automation is handed to a cloud platform — GitHub Actions, Vercel/Netlify, or Trigger.dev — to run around the clock. The logic for deciding what can be automated is identical to the Local Automation Map; the only difference is who ends up responsible for running it on time.</p>
+  <div class="hero-meta">
+    <span><b>Six stages</b>　interview to handoff</span>
+    <span><b>One of three platforms</b>　GitHub Actions · Vercel/Netlify · Trigger.dev</span>
+    <span><b>At least two cloud accounts</b>　GitHub, plus one deploy platform</span>
+  </div>
+
+  <div class="legend" role="note" aria-label="What each color in the diagrams means">
+    <div class="legend-item"><span class="swatch sw-amber"></span>Schedule / event trigger · failure alerts</div>
+    <div class="legend-item"><span class="swatch sw-gh"></span>GitHub Actions (for fixed schedules)</div>
+    <div class="legend-item"><span class="swatch sw-web"></span>Vercel / Netlify (called by another service)</div>
+    <div class="legend-item"><span class="swatch sw-trig"></span>Trigger.dev (step views · long loops · polling)</div>
+    <div class="legend-item"><span class="swatch sw-violet"></span>AI judgment (its own function, calls a model API)</div>
+    <div class="legend-item"><span class="swatch sw-stop"></span>Can't be automated / run failed</div>
+  </div>
+
+  <div class="prompt-cta">
+    <div class="prompt-cta-text">
+      <strong>Full Prompt Text (Cloud / Original Version)</strong>
+      <span>This diagram is a simplified guide. If you want to compare directly, or keep a copy of the original version, the exact wording is here to copy.</span>
+    </div>
+    <button type="button" class="btn" id="openPromptBtn-en">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="4" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 9.5V2.5a1 1 0 0 1 1-1H10" stroke="currentColor" stroke-width="1.4"/></svg>
+      View &amp; copy full text
+    </button>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <h2>The build: how the six stages unfold</h2>
+      <p>The first two stages are identical to the local version. The fork happens at Stage 4: the choice here isn't about whether an API exists — it's about which cloud platform takes it over.</p>
+    </div>
+
+    <figure>
+      <div class="fig-scroll">
+        <svg viewBox="0 0 960 1200" role="img" aria-label="Flowchart: Stage 1 interviews you; if a service has no API, this version says so honestly and offers no fallback. Steps with an API move into Stage 2, written up as SPEC.md. Stage 3 writes one single fixed local program; steps needing judgment become their own function calling a model API; the flow is proven with a dry run, then one real run, then a local git commit. Stage 4 picks one of three platforms by trigger type: a fixed schedule goes to GitHub Actions, being called by another service goes to Vercel or Netlify, needing step-by-step views or long loops or polling goes to Trigger.dev. Stage 5 completes deployment on whichever platform was chosen, and the three paths converge. Stage 6 reads the production run log, confirms failure alerts are on, writes README.md, and commits everything. The automation then goes live, running 24/7 in the cloud.">
+          <defs>
+            <marker id="cah-ink-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)" fill-opacity=".55"/>
+            </marker>
+            <marker id="cah-stop-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--stop)"/>
+            </marker>
+            <marker id="cah-gh-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--gh)"/>
+            </marker>
+            <marker id="cah-web-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--web)"/>
+            </marker>
+            <marker id="cah-trig-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--trig)"/>
+            </marker>
+          </defs>
+
+          <!-- Stage 1 -->
+          <g class="spine">
+            <rect class="box" x="240" y="24" width="480" height="68" rx="14"/>
+            <text class="n-title" x="480" y="52" text-anchor="middle">Stage 1 · Interview</text>
+            <text class="n-sub" x="480" y="72" text-anchor="middle">The task, your GitHub account, and each service's API</text>
+          </g>
+          <path class="flow" d="M480,92 L480,96" marker-end="url(#cah-ink-en)"/>
+
+          <!-- Diamond D1 -->
+          <g>
+            <polygon class="box" points="480,96 590,150 480,204 370,150" fill="var(--paper-raised)" stroke="var(--ink)" stroke-opacity=".55"/>
+            <text class="n-label" x="480" y="146" text-anchor="middle">Does it have an API?</text>
+            <text class="n-sub" x="480" y="162" text-anchor="middle">(once per service)</text>
+          </g>
+
+          <path class="flow" d="M370,150 L300,150 L300,240" marker-end="url(#cah-ink-en)"/>
+          <text class="n-label" x="300" y="196" text-anchor="middle">Has an API</text>
+
+          <path class="flow flow-stop" d="M590,150 L660,150" marker-end="url(#cah-stop-en)"/>
+          <text class="n-label" x="622" y="140" text-anchor="middle" fill="var(--stop)">No API</text>
+
+          <g class="lane-stop">
+            <rect class="box" x="700" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="800" y="140" text-anchor="middle" fill="var(--stop)">✕ Can't automate</text>
+            <text class="n-sub" x="800" y="160" text-anchor="middle">Say so honestly,</text>
+            <text class="n-sub" x="800" y="176" text-anchor="middle">propose an alternative</text>
+          </g>
+
+          <!-- Stage 2 -->
+          <g class="spine">
+            <rect class="box" x="240" y="240" width="480" height="68" rx="14"/>
+            <text class="n-title" x="270" y="268" text-anchor="start">Stage 2 · Confirm the plan</text>
+            <text class="n-sub" x="270" y="288" text-anchor="start">Six fields, written down — you approve before any code</text>
+            <text class="n-badge" x="690" y="278" text-anchor="end" fill="var(--amber)">SPEC.md</text>
+          </g>
+
+          <path class="flow" d="M480,308 L480,344" marker-end="url(#cah-ink-en)"/>
+
+          <!-- Stage 3 -->
+          <g class="spine">
+            <rect class="box" x="240" y="344" width="480" height="108" rx="14"/>
+            <text class="n-title" x="270" y="372" text-anchor="start">Stage 3 · Build &amp; test</text>
+            <text class="n-sub" x="270" y="392" text-anchor="start">One fixed program does everything: dedupe · retries · logs</text>
+            <text class="n-sub" x="270" y="410" text-anchor="start" fill="var(--violet)">Judgment steps call a model API — a separate key to get</text>
+            <text class="n-sub" x="270" y="428" text-anchor="start">Dry run first, for you to check — then one real run</text>
+          </g>
+
+          <path class="flow" d="M480,452 L480,488" marker-end="url(#cah-ink-en)"/>
+
+          <g class="spine">
+            <rect class="box" x="240" y="488" width="480" height="64" rx="14"/>
+            <text class="n-title" x="270" y="516" text-anchor="start">Local git commit</text>
+            <text class="n-sub" x="270" y="536" text-anchor="start">Stays local for now — pushed to GitHub later</text>
+            <text class="n-badge" x="690" y="526" text-anchor="end" fill="var(--stop)">Not live yet</text>
+          </g>
+
+          <path class="flow" d="M480,552 L480,588" marker-end="url(#cah-ink-en)"/>
+
+          <!-- Diamond D2 -->
+          <g>
+            <polygon class="box" points="480,588 590,642 480,696 370,642" fill="var(--paper-raised)" stroke="var(--ink)" stroke-opacity=".55"/>
+            <text class="n-label" x="480" y="638" text-anchor="middle">Which cloud platform?</text>
+            <text class="n-sub" x="480" y="654" text-anchor="middle">(by trigger type)</text>
+          </g>
+
+          <path class="flow flow-gh" d="M480,696 Q480,732 170,732" marker-end="url(#cah-gh-en)"/>
+          <path class="flow flow-web" d="M480,696 L480,732" marker-end="url(#cah-web-en)"/>
+          <path class="flow flow-trig" d="M480,696 Q480,732 790,732" marker-end="url(#cah-trig-en)"/>
+          <text class="n-sub" x="230" y="718" text-anchor="middle" fill="var(--gh)">Fixed schedule</text>
+          <text class="n-sub" x="480" y="716" text-anchor="middle" fill="var(--web)">Called by a service</text>
+          <text class="n-sub" x="740" y="718" text-anchor="middle" fill="var(--trig)">Step view / polling</text>
+
+          <!-- Lane headers -->
+          <g class="lane-gh">
+            <rect class="box" x="30" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="170" y="758" text-anchor="middle" fill="var(--gh)">GitHub Actions</text>
+            <text class="n-sub" x="170" y="778" text-anchor="middle">Fixed schedule</text>
+          </g>
+          <g class="lane-web">
+            <rect class="box" x="340" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="480" y="758" text-anchor="middle" fill="var(--web)">Vercel / Netlify</text>
+            <text class="n-sub" x="480" y="778" text-anchor="middle">Called by another service</text>
+          </g>
+          <g class="lane-trig">
+            <rect class="box" x="650" y="732" width="280" height="60" rx="12"/>
+            <text class="n-title" x="790" y="758" text-anchor="middle" fill="var(--trig)">Trigger.dev</text>
+            <text class="n-sub" x="790" y="778" text-anchor="middle">Step views · long loops · polling</text>
+          </g>
+
+          <path class="flow flow-gh" d="M170,792 L170,816" marker-end="url(#cah-gh-en)"/>
+          <path class="flow flow-web" d="M480,792 L480,816" marker-end="url(#cah-web-en)"/>
+          <path class="flow flow-trig" d="M790,792 L790,816" marker-end="url(#cah-trig-en)"/>
+
+          <!-- Lane bodies -->
+          <g class="lane-gh">
+            <rect class="box" x="30" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="170" y="848" text-anchor="middle" fill="var(--gh)">Create repo, push code</text>
+            <text class="n-sub" x="170" y="868" text-anchor="middle">Add secrets in Settings</text>
+            <text class="n-sub" x="170" y="884" text-anchor="middle">workflow.yml + manual trigger</text>
+          </g>
+          <g class="lane-web">
+            <rect class="box" x="340" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="480" y="848" text-anchor="middle" fill="var(--web)">Connect the repo</text>
+            <text class="n-sub" x="480" y="868" text-anchor="middle">Add env vars in project settings</text>
+            <text class="n-sub" x="480" y="884" text-anchor="middle">Deploy, then call the URL to test</text>
+          </g>
+          <g class="lane-trig">
+            <rect class="box" x="650" y="816" width="280" height="96" rx="12"/>
+            <text class="n-title" x="790" y="848" text-anchor="middle" fill="var(--trig)">Create the project</text>
+            <text class="n-sub" x="790" y="868" text-anchor="middle">Set env vars in the dashboard</text>
+            <text class="n-sub" x="790" y="884" text-anchor="middle">CLI deploy, trigger a test run</text>
+          </g>
+
+          <path class="flow flow-gh" d="M170,912 Q170,952 480,952" marker-end="url(#cah-ink-en)"/>
+          <path class="flow flow-web" d="M480,912 L480,952" marker-end="url(#cah-ink-en)"/>
+          <path class="flow flow-trig" d="M790,912 Q790,952 480,952" marker-end="url(#cah-ink-en)"/>
+          <path class="flow" d="M480,952 L480,960" marker-end="url(#cah-ink-en)"/>
+
+          <!-- Stage 6 -->
+          <g class="spine">
+            <rect class="box" x="240" y="960" width="480" height="84" rx="14"/>
+            <text class="n-title" x="270" y="988" text-anchor="start">Stage 6 · Verify &amp; hand over</text>
+            <text class="n-sub" x="270" y="1008" text-anchor="start">Read the platform's run log, confirm failure alerts</text>
+            <text class="n-sub" x="270" y="1024" text-anchor="start">Write README.md, commit everything</text>
+          </g>
+
+          <path class="flow" d="M480,1044 L480,1080" marker-end="url(#cah-ink-en)"/>
+
+          <!-- End pill -->
+          <g>
+            <rect class="end-pill" x="260" y="1080" width="440" height="64" rx="32"/>
+            <text class="end-pill-text" x="480" y="1118" text-anchor="middle">Live in production, running 24/7</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Figure 1 · The two biggest differences from the local version: a service with no API is declared undoable outright, with no browser fallback; and Stage 4 picks one of three cloud platforms, rather than three parallel paths.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>The six stages, sentence by sentence</h2>
+      <p>Compared side by side with the local version, the differences all show up between Stage 3 and Stage 5.</p>
+    </div>
+    <div class="stage-list">
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>1</span></div>
+        <div class="stage-body">
+          <h3>Interview</h3>
+          <p>Same questions as the local version — the task, the data source, how often — plus one more: whether you have a GitHub account. Every outside service still gets asked about its <b>API</b>; the difference is what happens when the answer is no. This version says so honestly and stops there, rather than falling back to browser automation the way the local version does.</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>2</span></div>
+        <div class="stage-body">
+          <h3>Confirm the plan</h3>
+          <p>Identical to the local version: everything becomes a <b>SPEC.md</b>, alongside an honest account of trade-offs and cost, and nothing gets coded until you approve it.</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>3</span></div>
+        <div class="stage-body">
+          <h3>Build &amp; test<span class="tag tag-diff">different from local</span></h3>
+          <p>The local version splits work three ways (local script · Chrome action · AI judgment); here there's <b>only one path</b> — everything becomes the same fixed program. Steps needing judgment still get isolated into their own function, but with no live Claude session to call on, that function has to <b>call a model API</b> itself — a separate model key to apply for, a cost the local version doesn't have. It's still proven with a dry run before one real run follows, then lands in a local git commit (not pushed yet — just a change history so far).</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>4</span></div>
+        <div class="stage-body">
+          <h3>Choose the deploy platform<span class="tag tag-diff">different from local</span></h3>
+          <p>The local version confirms local-run limits here; this version instead picks one of three platforms, by trigger type: a fixed schedule goes to <b>GitHub Actions</b>; being called by another service (a form submission, a webhook) goes to <b>Vercel</b> or <b>Netlify</b>; needing a step-by-step view of each run, long loops, or polling goes to <b>Trigger.dev</b>. It starts by checking which of these accounts you already have.</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>5</span></div>
+        <div class="stage-body">
+          <h3>Deploy hand in hand<span class="tag tag-diff">different from local</span></h3>
+          <p>Guided step by step, by platform: <b>GitHub Actions</b> needs a repo created (a cloud folder for the code), pushed to, secrets added under Settings → Secrets, a workflow.yml written for the schedule plus a manual trigger button, one test run from the Actions tab, and email alerts turned on for failed runs. <b>Vercel/Netlify</b> needs the repo connected, environment variables added in the project settings, a deploy, then one test call to the URL. <b>Trigger.dev</b> needs a project created, environment variables set in its dashboard, a deploy through its command-line tool, and one triggered test run.</p>
+        </div>
+      </div>
+      <div class="stage-row">
+        <div class="stage-num">STAGE<span>6</span></div>
+        <div class="stage-body">
+          <h3>Verify &amp; hand over</h3>
+          <p>Same as the local version: read the production run log together (this time from the cloud platform, not locally), confirm failure alerts are on, write <b>README.md</b>, commit everything, and close out the handoff.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>When the schedule or event fires: what actually happens</h2>
+      <p>The biggest difference from the local version: what wakes up isn't the Claude on your computer — it's the cloud platform itself.</p>
+    </div>
+    <figure>
+      <div class="fig-scroll">
+        <svg viewBox="0 0 1200 320" role="img" aria-label="Runtime flowchart: when the schedule fires or an event happens, the cloud platform you chose — GitHub Actions, Vercel, or Trigger.dev — runs your code. If there's an AI judgment step, it calls a model API to complete it. The result gets produced: an email, a new row, or a message sent. If this run fails, the platform emails you a failure alert.">
+          <defs>
+            <marker id="cah2-ink-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)" fill-opacity=".55"/>
+            </marker>
+          </defs>
+
+          <path class="flow" d="M230,150 L300,150" marker-end="url(#cah2-ink-en)"/>
+          <path class="flow" d="M580,150 L650,150" marker-end="url(#cah2-ink-en)"/>
+          <path class="flow" d="M850,150 L920,150" marker-end="url(#cah2-ink-en)"/>
+          <path class="flow flow-stop" d="M440,195 L440,230" marker-end="url(#cah2-ink-en)"/>
+
+          <g class="lane-amber">
+            <rect class="box" x="30" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="130" y="144" text-anchor="middle" fill="var(--amber)">Schedule / event</text>
+            <text class="n-sub" x="130" y="164" text-anchor="middle">triggers this run</text>
+          </g>
+
+          <g class="spine">
+            <rect class="box" x="300" y="105" width="280" height="90" rx="12"/>
+            <text class="n-title" x="440" y="140" text-anchor="middle">Platform runs your code</text>
+            <text class="n-sub" x="440" y="160" text-anchor="middle">GitHub Actions / Vercel / Trigger.dev</text>
+          </g>
+
+          <g class="lane-violet">
+            <rect class="box" x="650" y="110" width="200" height="80" rx="12"/>
+            <text class="n-title" x="750" y="144" text-anchor="middle" fill="var(--violet)">AI judgment</text>
+            <text class="n-sub" x="750" y="164" text-anchor="middle">via a model API call</text>
+          </g>
+
+          <g class="spine">
+            <rect class="box" x="920" y="110" width="240" height="80" rx="12"/>
+            <text class="n-title" x="1040" y="144" text-anchor="middle">Produces the result</text>
+            <text class="n-sub" x="1040" y="164" text-anchor="middle">email · new row · message</text>
+          </g>
+
+          <g class="lane-stop">
+            <rect class="box" x="310" y="230" width="260" height="70" rx="12"/>
+            <text class="n-title" x="440" y="256" text-anchor="middle" fill="var(--stop)">✕ Run failed</text>
+            <text class="n-sub" x="440" y="274" text-anchor="middle">The platform emails you</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Figure 2 · The whole loop needs neither your computer nor the Claude app open — that's the "always on" the cloud version buys you.</figcaption>
+    </figure>
+  </section>
+
+  <section class="callout">
+    <div class="callout-card good">
+      <h3>✓ What you get: real around-the-clock</h3>
+      <p>Cloud deployment runs 24/7 — no need for your computer to be on, or the Claude app connected. If the whole point is that it must run on time whether or not you're around, this is the only one of the three approaches that delivers that.</p>
+    </div>
+    <div class="callout-card warn">
+      <h3>⚠ The cost: account and setup complexity</h3>
+      <p>You'll need to apply for and manage at least two accounts (GitHub, plus one of Vercel/Netlify/Trigger.dev), each with its own interface and its own way of setting keys — and services with no API are simply out of reach, unlike the local version's browser fallback.</p>
+    </div>
+  </section>
+
+  <footer>
+    Companion to: Local Automation Map (the local automation-prompt-local.md)　/　Read-only reference — no interactive features on this page except copy
+  </footer>
+
+</div>
+
+</div>
+
+  <div class="modal-overlay lang-zh" id="promptModal" hidden>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="promptModalTitle">
+      <div class="modal-head">
+        <h3 id="promptModalTitle">完整 Prompt 原文（雲端／原始版）</h3>
+        <div class="modal-actions">
+          <span class="copy-feedback" id="copyFeedback">已複製</span>
+          <button type="button" class="btn" id="copyPromptBtn">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="4" y="4" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M2.5 9.5V2.5a1 1 0 0 1 1-1H10" stroke="currentColor" stroke-width="1.4"/></svg>
+            <span id="copyPromptBtnLabel">複製全文</span>
+          </button>
+          <button type="button" class="icon-btn" id="closePromptBtn" aria-label="關閉">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body"><pre id="promptFullText">&lt;role&gt;
+You are an automation engineer and a patient guide for people who have never written code. You are running inside Claude Code or Codex, on the user's own computer, in a folder the user opened for this one automation.
+Your job: interview the user about a repetitive task they want automated, restate it as a six-field spec, build it as plain deterministic code, test it against their real data, choose where it should run, guide them through deployment step by step (including creating any accounts they do not have yet), and hand it over with a plain-language README. The user's role is to describe what they want and to do the browser steps you cannot do for them.
+&lt;/role&gt;
+&lt;operating-rules&gt;
+These rules apply to the whole session and override your defaults.
+0. First action, before anything else: save this entire prompt into a file in the current folder named CLAUDE.md if you are Claude Code, or AGENTS.md if you are Codex. If you cannot tell which agent you are, save both. If the file already exists, append this prompt under a heading "Automation handover rules". Tell the user in one sentence what you did and why: the rules must survive when the conversation gets long or is reopened later.
+1. Language: reply in the language the user writes in. If they write Chinese, reply in Traditional Chinese.
+2. Assume no technical background. The first time any technical term appears (API, JSON, repository, environment variable, cron, webhook, deploy, and so on), add a one-line everyday explanation in parentheses. After that, use the term plainly.
+3. One question at a time. One action request at a time. Ask, then stop and wait for the answer. Never send a list of questions.
+4. When the user must do something in a browser or on another screen, always use four parts, in this order: where to go, what to click, what they will see, what to paste back to you. Then wait. If they cannot find it, ask them to describe or paste what is on their screen.
+5. Money: before any step that could cost money, state the price and the free option. Prefer free tiers. Never sign the user up for a paid plan, and never handle payment details.
+6. Secrets: never ask the user to paste an API key, password, token, or connection string into this conversation. When a secret is needed, explain where to obtain it, then tell them to put it into a local file named .env in this folder (show the exact line to add, with a placeholder value), and later into the deployment platform's secret settings. Make sure .env is listed in .gitignore before the first commit. If the user pastes a secret into the chat anyway, tell them to revoke and regenerate it, then continue using only its name.
+7. Plan before you act. Announce each stage as "Stage N of 6: ..." with one sentence about what will happen and what you need from the user. Do not skip or merge stages without saying so.
+8. Test after every change. Never claim something works without having run it. When you run something, show the actual result in plain words, for example: "It found 3 new form submissions, and it would have added 3 rows to your sheet with these values: ...".
+9. Errors: explain every error in one plain sentence (what broke, why, what you will do next). Retry at most twice on your own; after that, stop and lay out the options.
+10. Use the user's existing tools. Detect the operating system and whether Node.js or Python is installed by running the appropriate command yourself; never ask the user which one they have. Pick whichever is already installed. If neither is, guide the installation with the four-part format.
+11. Never describe an interface element you are not sure exists. Platform menus change. Every time you give a menu path, add: "if the wording on your screen is different, tell me what you see".
+&lt;/operating-rules&gt;
+&lt;context-gathering&gt;
+Stage 1 of 6: interview.
+If a file named SPEC.md already exists in this folder, read it, summarize it in plain words, ask the user to confirm it is still what they want, and then skip to Stage 2 step 2. Otherwise ask the following, one at a time, waiting after each:
+1. "What is the task you want to stop doing by hand, and why does it matter to you?" Capture the pain: time, mistakes, forgetting.
+2. "When should it run? Every day at a certain time, every few hours, or whenever something happens, such as a form being submitted, a payment arriving, or a file landing somewhere?"
+3. "Walk me through how you do it by hand today, step by step: where the information comes from, what you do with it, where the result goes." If the answer is vague, ask for one concrete example from the last time they did it.
+4. "What should the result look like? Describe the ideal outcome of one run."
+5. "How would you know it worked? What would you check?" This becomes the Acceptance field.
+6. "Do you have a GitHub account?" Then, for each external service named in step 3: "Do you have an account there, and can you log in right now?"
+Do not ask about their operating system or installed tools; detect those yourself (rule 10).
+After the interview, tell the user honestly whether this task fits automation:
+- If the task needs a fresh human judgment every time, or a service involved gives programs no way in (no API, no export), say so and propose the nearest thing that can be automated.
+- If one part needs AI judgment (summarizing, classifying, drafting), mark that one step as the AI step and everything else as fixed code that never calls a model.
+Stage 2 of 6: plan confirmation.
+1. Restate the plan in plain words, in four parts: what will be built; where it will run and why; what it will cost, naming the free tier and its limit; what the user must do personally, such as sign-ups and obtaining keys.
+2. Write SPEC.md in the six fields (format below) and show it. Ask what is wrong or missing. Iterate until they confirm. Save it. Do not write any code before this confirmation.
+3. List every secret the flow will need, by name and where it comes from, so the user can see the whole shopping list before Stage 3 starts. Wait for a go-ahead.
+&lt;/context-gathering&gt;
+&lt;analysis&gt;
+Deciding the shape of the build, before writing code:
+- The trigger type decides the deployment target: a schedule points to GitHub Actions; being called by another service points to a serverless function on Vercel or Netlify; a need for a step-by-step run view, long loops, or polling points to Trigger.dev.
+- Any "has this been handled already" judgment means the code needs state: a stable ID per item (a message ID, a video ID, a row ID) and a small store of processed IDs.
+- Any step described as "read it and decide", "summarize", or "write a message" is the AI step and is isolated in one function; every other step is deterministic and must never call a model.
+- Every external service in the spec needs exactly one named secret; the shopping list from Stage 2 is the source of truth.
+- The simplest stack already installed wins (Node.js or Python); no framework unless the deployment target requires it.
+&lt;/analysis&gt;
+&lt;execution&gt;
+Stage 3 of 6: build and test.
+1. Choose the simplest stack that is already installed. One folder, few files.
+2. Write the code from SPEC.md. Every build must have:
+ - all secrets and IDs read from environment variables, never written in the code
+ - deduplication by a stable ID wherever the spec has a "has this been processed" judgment
+ - retries with backoff on every network call
+ - one plain-words log line per step, so a human can read a run
+ - a dry-run mode that does everything except the final side effect (sending, writing, posting)
+ - the AI step, if any, isolated in one function; everything else deterministic
+ - a test that runs the whole flow once against the user's real data in dry-run mode
+3. Guide the user through creating the .env file (rule 6) for every secret on the shopping list, one secret at a time, using the four-part format for wherever each key is obtained.
+4. Run the dry-run test. Show the actual result in plain words and ask whether it matches the Acceptance field of SPEC.md. Fix and rerun until it does.
+5. With the user's permission, run one real execution. Confirm the side effect happened where they expected: the email arrived, the row appeared, the message was posted.
+6. Initialize a git repository (explain: a change history so any edit can be compared and undone), confirm .env is ignored, and commit.
+Stage 4 of 6: choose where it runs.
+Pick the target by trigger type and explain the choice in two sentences:
+- runs on a schedule (every morning, every 8 hours): GitHub Actions. Free for this kind of use; the schedule is one cron line in a small YAML file; failed runs can email the user.
+- is called by another service (a form submission, a payment, a webhook): a serverless function on Vercel or Netlify. Free tier; the platform gives a URL that other services call.
+- needs a step-by-step view of each run, long-running loops, or polling: Trigger.dev. Free tier; its dashboard shows every step of every run.
+Ask which of these accounts they already have: GitHub, Vercel, Netlify, Trigger.dev. Wait. Confirm the choice with them before moving on.
+Stage 5 of 6: deploy hand in hand.
+1. If they lack a needed account, guide sign-up with the four-part format. You cannot click for them; say so once, plainly.
+2. Deploy one step at a time, waiting for the user after every browser step:
+ - GitHub Actions: create the repository (use the gh command-line tool if it is installed and logged in; otherwise guide the web flow), push the code, then add each secret in the repository's Settings, then Secrets and variables, then Actions, then "New repository secret" (you give the name; the user pastes the value there, never here). Add a workflow file with the cron schedule plus a manual "workflow_dispatch" trigger. Guide them to the Actions tab, "Run workflow", and read the run log together. Then guide them to their GitHub notification settings to turn on email for failed workflow runs only.
+ - Vercel or Netlify: connect the repository, add environment variables in the project settings (names from you, values from them), deploy, then test by calling the URL once and reading the log together.
+ - Trigger.dev: create the project, set environment variables in the dashboard, deploy with the platform's command-line tool, trigger a test run, and read the run in the dashboard together.
+ After every menu path, remind them that the wording on their screen wins.
+Stage 6 of 6: verify and hand over.
+1. Confirm the first scheduled or triggered production run succeeded by reading the platform's run log together with the user.
+2. Confirm failure notifications are on.
+3. Write README.md (format below) in plain language, and commit everything.
+4. Tell the user the three things to check first when it fails, and that the way to change anything later is to open this folder with their coding agent and describe the change in one sentence.
+&lt;/execution&gt;
+&lt;output-format&gt;
+Why these two documents: SPEC.md is the contract that the code, the tests, and any future change all follow; README.md is what the user reads at 7 a.m. when the email did not arrive.
+## SPEC.md (Stage 2)
+1. Trigger: when it runs
+2. Input: where the data comes from
+3. Judgment: what it decides, including "has this been processed"
+4. Actions: what it does, in order; mark the AI step if there is one
+5. Error handling: what happens when something fails, and who is told
+6. Acceptance: how the user knows it is done right, as observable, testable statements
+Then a list titled "Secrets needed:" with names and where each comes from.
+## README.md (Stage 6)
+- What this automation does, in two sentences
+- When it runs and where: platform and schedule
+- How to know it ran: the exact place to look
+- How to pause or stop it: the exact place
+- When it fails: the first three things to check, in order
+- How to change it: open this folder with your coding agent and describe the change
+- Secrets it uses: names only, and where each one lives
+- Cost: current plan and its limits
+&lt;/output-format&gt;
+&lt;guardrails&gt;
+- Never ask for, accept, or repeat a secret's value. Names only.
+- Build only what SPEC.md says. If you believe something is missing, propose it in one sentence and wait for a yes.
+- Never claim a run worked without having run it and shown the result.
+- Never choose a paid plan or handle payment details for the user. If a step requires payment information, say so and stop.
+- Do not over-engineer: one folder, few files, no framework unless the deployment target needs it. Do not under-engineer: never ship a fix that only hides an error message.
+- If the user is stuck on a browser step, ask what is on their screen. Do not guess a different menu path without saying it is a guess.
+- If the task does not fit automation, say so in Stage 1 instead of building something that will disappoint.
+&lt;/guardrails&gt;</pre></div>
+    </div>
+  </div>
+
+
+<script>
+(function(){
+  var STORAGE_KEY = 'automation-cloud-map-lang';
+  var panels = { zh: document.getElementById('panel-zh'), en: document.getElementById('panel-en') };
+  var langBtns = { zh: document.getElementById('langBtnZh'), en: document.getElementById('langBtnEn') };
+  var openBtns = { zh: document.getElementById('openPromptBtn-zh'), en: document.getElementById('openPromptBtn-en') };
+  var overlay = document.getElementById('promptModal');
+  var closeBtn = document.getElementById('closePromptBtn');
+  var copyBtn = document.getElementById('copyPromptBtn');
+  var copyBtnLabel = document.getElementById('copyPromptBtnLabel');
+  var feedback = document.getElementById('copyFeedback');
+  var pre = document.getElementById('promptFullText');
+  var modalTitle = document.getElementById('promptModalTitle');
+
+  var I18N = {
+    zh: { modalTitle:'完整 Prompt 原文（雲端／原始版）', copyBtn:'複製全文', closeLabel:'關閉', copied:'已複製', copyFailed:'複製失敗，請手動選取' },
+    en: { modalTitle:'Full Prompt Text (Cloud / Original Version)', copyBtn:'Copy full text', closeLabel:'Close', copied:'Copied', copyFailed:'Copy failed \u2014 select the text manually' }
+  };
+
+  var currentLang = 'zh';
+
+  function getStored(){ try { return localStorage.getItem(STORAGE_KEY); } catch(e){ return null; } }
+  function setStored(v){ try { localStorage.setItem(STORAGE_KEY, v); } catch(e){} }
+
+  function updateModalLabels(){
+    var t = I18N[currentLang];
+    modalTitle.textContent = t.modalTitle;
+    copyBtnLabel.textContent = t.copyBtn;
+    closeBtn.setAttribute('aria-label', t.closeLabel);
+    overlay.classList.remove('lang-zh','lang-en');
+    overlay.classList.add('lang-' + currentLang);
+  }
+
+  function applyLang(lang){
+    currentLang = lang;
+    panels.zh.hidden = lang !== 'zh';
+    panels.en.hidden = lang !== 'en';
+    langBtns.zh.setAttribute('aria-pressed', lang === 'zh' ? 'true' : 'false');
+    langBtns.en.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+    updateModalLabels();
+    setStored(lang);
+  }
+
+  langBtns.zh.addEventListener('click', function(){ applyLang('zh'); });
+  langBtns.en.addEventListener('click', function(){ applyLang('en'); });
+
+  var stored = getStored();
+  applyLang(stored === 'en' ? 'en' : 'zh');
+
+  function openModal(){
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeModal(){
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    (openBtns[currentLang] || openBtns.zh).focus();
+  }
+  openBtns.zh.addEventListener('click', openModal);
+  openBtns.en.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !overlay.hidden) closeModal();
+  });
+
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  function showFeedback(ok){
+    var t = I18N[currentLang];
+    feedback.textContent = ok ? t.copied : t.copyFailed;
+    feedback.classList.add('show');
+    setTimeout(function(){ feedback.classList.remove('show'); }, 1800);
+  }
+
+  copyBtn.addEventListener('click', function(){
+    var text = pre.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        showFeedback(true);
+      }).catch(function(){
+        showFeedback(fallbackCopy(text));
+      });
+    } else {
+      showFeedback(fallbackCopy(text));
+    }
+  });
+})();
+</script>
