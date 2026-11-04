@@ -13,6 +13,7 @@
 | Matt Pocock 技能圖鑑 | [開啟](https://Ming050823.github.io/html-docs/html/mattpocock-skills-atlas/) | [mattpocock-skills-atlas](https://github.com/Ming050823/mattpocock-skills-atlas) |
 | API 三語互動說明 | [開啟](https://Ming050823.github.io/html-docs/html/api-basics-interactive/) | [api-basics-interactive](https://github.com/Ming050823/api-basics-interactive) |
 | 工具評估框架 | [開啟](https://Ming050823.github.io/html-docs/html/tool-evaluation-framework/) | [tool-evaluation-framework](https://github.com/Ming050823/tool-evaluation-framework) |
+| AI 流程產品經理招募指南 | [開啟](https://Ming050823.github.io/html-docs/html/ai-workflow-pm-recruitment/) | - |
 
 ## 資料夾規則
 
