@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國中/高中理化：繩波產生與傳播動態模擬（第27題與第28題精準圖解）</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+    }
+    input[type=range] {
+      accent-color: #3b82f6;
+    }
+    .badge-glow {
+      box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
+    }
+    .glow-amber {
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+  <!-- 頂部導航 -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 py-3.5 sm:px-6 flex flex-wrap justify-between items-center gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="flex h-3 w-3 relative">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+        </span>
+        <h1 class="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+          繩波物理互動實驗室 <span class="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 font-medium">第 27 題 (B) & 第 28 題 (A) 官方正解</span>
+        </h1>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-slate-300">
+        <span class="bg-slate-800/90 px-3 py-1 rounded-lg border border-slate-700">週期 $T = 2\text{ 秒}$</span>
+        <span class="bg-slate-800/90 px-3 py-1 rounded-lg border border-slate-700">波速 $v = 0.5\lambda/\text{秒}$</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 w-full flex-grow space-y-6">
+
+    <!-- 考題原題重現卡片 -->
+    <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-5 relative z-10">
+        <div class="space-y-2 max-w-3xl">
+          <div class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">
+            <span>📋</span> 題幹原始情境重現
+          </div>
+          <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+            在繩子的左端沿垂直方向做上下擺動，當<span class="text-blue-400 font-bold underline underline-offset-4 decoration-blue-500/50">完整振動一次</span>時，可以產生波形（前半向上產生波峰、後半向下產生波谷），<span class="text-emerald-400 font-bold underline underline-offset-4 decoration-emerald-500/50">共歷時 2 秒</span>。
+          </p>
+        </div>
+        <!-- 關鍵物理參量看板 -->
+        <div class="grid grid-cols-3 gap-3 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800 text-xs w-full lg:w-auto">
+          <div class="text-center px-2">
+            <div class="text-slate-400 text-[11px]">振動週期 $T$</div>
+            <div class="text-base font-bold text-blue-400 font-mono mt-0.5">2.0 秒</div>
+          </div>
+          <div class="text-center px-2 border-x border-slate-800">
+            <div class="text-slate-400 text-[11px]">波傳播速度 $v$</div>
+            <div class="text-base font-bold text-emerald-400 font-mono mt-0.5">0.5 λ/s</div>
+          </div>
+          <div class="text-center px-2">
+            <div class="text-slate-400 text-[11px]">手部運動路徑</div>
+            <div class="text-base font-bold text-amber-400 mt-0.5">中➡上➡中➡下➡中</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Canvas 物理動態模擬器 -->
+    <section class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl relative">
+      <!-- 狀態欄資訊 -->
+      <div class="bg-slate-950/90 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex flex-wrap items-center gap-3 sm:gap-5">
+          <span class="flex items-center gap-1.5 text-slate-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block"></span> 目前時間：
+            <span id="time-display" class="font-mono text-blue-400 font-bold text-sm">0.00</span> 秒
+          </span>
+          <span class="flex items-center gap-1.5 text-slate-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> 波前端位置：
+            <span id="wavefront-display" class="font-mono text-emerald-400 font-bold text-sm">0.00</span> λ
+          </span>
+          <span class="flex items-center gap-1.5 text-slate-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> 波尾端位置：
+            <span id="tail-display" class="font-mono text-amber-400 font-bold text-sm">0.00</span> λ
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-1.5 cursor-pointer text-slate-300">
+            <input type="checkbox" id="toggle-particle" class="accent-blue-500" checked>
+            顯示粒子追蹤
+          </label>
+        </div>
+      </div>
+
+      <!-- Canvas -->
+      <div class="relative bg-slate-950">
+        <canvas id="wave-canvas" class="w-full block" style="height: 420px;"></canvas>
+      </div>
+
+      <!-- 控制欄 -->
+      <div class="bg-slate-900 px-4 py-4 border-t border-slate-800 flex flex-wrap items-center gap-4">
+        <div class="flex items-center gap-2">
+          <button id="btn-play" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition flex items-center gap-2">
+            <span id="play-text">播放動畫</span>
+          </button>
+          <button id="btn-reset" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg text-sm font-medium transition">
+            重置
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-300">
+          <span>速度：</span>
+          <button class="speed-btn px-2.5 py-1 rounded bg-blue-600 text-white font-bold" data-speed="0.5">0.5x</button>
+          <button class="speed-btn px-2.5 py-1 rounded text-slate-400" data-speed="1">1x</button>
+          <button class="speed-btn px-2.5 py-1 rounded text-slate-400" data-speed="2">2x</button>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-300 ml-auto">
+          <span>時間軸：</span>
+          <input type="range" id="time-slider" min="0" max="10" step="0.01" value="0" class="w-48 accent-blue-500">
+        </div>
+      </div>
+
+      <!-- 快速跳轉 -->
+      <div class="bg-slate-950/50 px-4 py-3 border-t border-slate-800 flex flex-wrap gap-2 text-xs">
+        <button id="btn-t0" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">t = 0 s</button>
+        <button id="btn-t1" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">t = 1.0 s</button>
+        <button id="btn-t2" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">t = 2.0 s</button>
+        <button id="btn-t7" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">t = 7.0 s</button>
+      </div>
+    </section>
+
+    <!-- 題目解析卡片 -->
+    <div class="grid md:grid-cols-2 gap-5">
+      <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+          <span class="text-blue-400">27.</span> 第 27 題
+        </h3>
+        <p class="text-slate-300 text-sm leading-relaxed mb-3">
+          當時間 $t = 7$ 秒時，繩子上波的波前端與波尾端位置分別為？
+        </p>
+        <div class="bg-slate-950 rounded-xl p-4 text-sm">
+          <div class="text-emerald-400 font-medium mb-1">正解：(B)</div>
+          <p class="text-slate-300 leading-relaxed">
+            手部振動一次後停止（歷時 2 秒），波以 $v = 0.5\lambda/\text{s}$ 向右傳播。<br>
+            $t = 7$ s 時，波前端已傳播 $7 \times 0.5 = 3.5\lambda$，波尾端為 $5 \times 0.5 = 2.5\lambda$。
+          </p>
+        </div>
+      </section>
+
+      <section class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">28.</span> 第 28 題
+        </h3>
+        <p class="text-slate-300 text-sm leading-relaxed mb-3">
+          當時間 $t = 7$ 秒時，繩子上正在振動的區域長度為？
+        </p>
+        <div class="bg-slate-950 rounded-xl p-4 text-sm">
+          <div class="text-emerald-400 font-medium mb-1">正解：(A)</div>
+          <p class="text-slate-300 leading-relaxed">
+            波包長度 = 波前端 - 波尾端 = $3.5\lambda - 2.5\lambda = 1\lambda$。<br>
+            因手部只振動一次，波包長度固定為 $1\lambda$。
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-slate-900/50 py-4 text-center text-xs text-slate-500">
+    繩波物理互動實驗室 · 國中/高中理化 · 第 27 題 & 第 28 題
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+    const timeDisplay = document.getElementById('time-display');
+    const wavefrontDisplay = document.getElementById('wavefront-display');
+    const tailDisplay = document.getElementById('tail-display');
+    const timeSlider = document.getElementById('time-slider');
+    const btnPlay = document.getElementById('btn-play');
+    const playText = document.getElementById('play-text');
+    const btnReset = document.getElementById('btn-reset');
+    const toggleParticle = document.getElementById('toggle-particle');
+    const speedButtons = document.querySelectorAll('.speed-btn');
+
+    let currentTime = 0;
+    let isPlaying = false;
+    let playbackSpeed = 0.5;
+    let lastTimestamp = null;
+    let animationFrameId = null;
+    const maxTime = 10;
+    const T = 2;
+    const v = 0.5; // λ/s
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = 420 * window.devicePixelRatio;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = '420px';
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+
+    function getDisplacement(x, t) {
+      // x in λ units, t in seconds
+      // Hand vibrates for one period only (0 to 2s)
+      if (t <= 0) return 0;
+      const phase = t - x / v;
+      if (phase < 0 || phase > T) return 0;
+      return Math.sin(2 * Math.PI * phase / T);
+    }
+
+    function render() {
+      const w = canvas.width / window.devicePixelRatio;
+      const h = canvas.height / window.devicePixelRatio;
+      ctx.clearRect(0, 0, w, h);
+
+      // Background grid
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < w; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+        ctx.stroke();
+      }
+      for (let y = 0; y < h; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      // Center line
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, h / 2);
+      ctx.lineTo(w, h / 2);
+      ctx.stroke();
+
+      // Wave
+      const wavefront = Math.min(currentTime * v, 10);
+      const tail = Math.max(0, (currentTime - T) * v);
+      const pixelsPerLambda = w / 5;
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      let started = false;
+      for (let px = 0; px <= w; px += 2) {
+        const xLambda = px / pixelsPerLambda;
+        const disp = getDisplacement(xLambda, currentTime);
+        const py = h / 2 - disp * 80;
+        if (!started) {
+          ctx.moveTo(px, py);
+          started = true;
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.stroke();
+
+      // Hand
+      const handY = h / 2 - getDisplacement(0, currentTime) * 80;
+      ctx.fillStyle = '#f59e0b';
+      ctx.beginPath();
+      ctx.arc(20, handY, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Particle tracking
+      if (toggleParticle.checked) {
+        for (let i = 0.5; i < 5; i += 0.5) {
+          const px = i * pixelsPerLambda;
+          const disp = getDisplacement(i, currentTime);
+          const py = h / 2 - disp * 80;
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath();
+          ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Labels
+      timeDisplay.textContent = currentTime.toFixed(2);
+      wavefrontDisplay.textContent = wavefront.toFixed(2);
+      tailDisplay.textContent = tail.toFixed(2);
+      timeSlider.value = currentTime;
+    }
+
+    function animate(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const dt = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      if (isPlaying) {
+        currentTime += dt * playbackSpeed;
+        if (currentTime >= maxTime) {
+          currentTime = maxTime;
+          pause();
+        }
+        render();
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    }
+
+    function play() {
+      if (currentTime >= maxTime) currentTime = 0;
+      isPlaying = true;
+      lastTimestamp = null;
+      playText.textContent = '暫停';
+      btnPlay.classList.replace('bg-blue-600', 'bg-amber-600');
+      btnPlay.classList.replace('hover:bg-blue-500', 'hover:bg-amber-500');
+    }
+
+    function pause() {
+      isPlaying = false;
+      playText.textContent = '播放動畫';
+      btnPlay.classList.replace('bg-amber-600', 'bg-blue-600');
+      btnPlay.classList.replace('hover:bg-amber-500', 'hover:bg-blue-500');
+    }
+
+    btnPlay.addEventListener('click', () => {
+      if (isPlaying) pause();
+      else play();
+    });
+
+    btnReset.addEventListener('click', () => {
+      pause();
+      currentTime = 0;
+      render();
+    });
+
+    window.jumpTo = function(seconds) {
+      pause();
+      currentTime = seconds;
+      render();
+    };
+
+    document.getElementById('btn-t0').addEventListener('click', () => jumpTo(0));
+    document.getElementById('btn-t1').addEventListener('click', () => jumpTo(1.0));
+    document.getElementById('btn-t2').addEventListener('click', () => jumpTo(2.0));
+    document.getElementById('btn-t7').addEventListener('click', () => jumpTo(7.0));
+
+    timeSlider.addEventListener('input', (e) => {
+      pause();
+      currentTime = parseFloat(e.target.value);
+      render();
+    });
+
+    toggleParticle.addEventListener('change', render);
+
+    speedButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        speedButtons.forEach(b => {
+          b.classList.remove('bg-blue-600', 'text-white', 'font-bold');
+          b.classList.add('text-slate-400');
+        });
+        btn.classList.add('bg-blue-600', 'text-white', 'font-bold');
+        btn.classList.remove('text-slate-400');
+        playbackSpeed = parseFloat(btn.dataset.speed);
+      });
+    });
+
+    window.onload = function () {
+      resizeCanvas();
+      render();
+      animationFrameId = requestAnimationFrame(animate);
+    };
+  </script>
+</body>
+</html>
