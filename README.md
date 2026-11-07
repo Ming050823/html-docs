@@ -14,7 +14,7 @@
 | API 三語互動說明 | [開啟](https://Ming050823.github.io/html-docs/html/api-basics-interactive/) | [api-basics-interactive](https://github.com/Ming050823/api-basics-interactive) |
 | 工具評估框架 | [開啟](https://Ming050823.github.io/html-docs/html/tool-evaluation-framework/) | [tool-evaluation-framework](https://github.com/Ming050823/tool-evaluation-framework) |
 | AI 流程產品經理招募指南 | [開啟](https://Ming050823.github.io/html-docs/html/ai-workflow-pm-recruitment/) | - |
-| 繩波物理互動實驗室 | [開啟](https://Ming050823.github.io/html-docs/html/rope-wave-simulation/) | - |
+| 繩波物理互動實驗室 | [開啟](https://Ming050823.github.io/html-docs/html/children-textbooks/) | - |
 
 ## 資料夾規則
 
